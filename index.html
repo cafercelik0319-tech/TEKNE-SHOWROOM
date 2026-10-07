@@ -1,1260 +1,1112 @@
 <!DOCTYPE html>
-<html lang="tr" class="light">
+<html lang="tr" class="overflow-x-hidden">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sahibinden Tekne & Yat Vitrini</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NAUTIC SHOWROOM - Ultra Lüks Yat & Model Kataloğu</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-    }
-  </script>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    html, body {
+      overflow-x: hidden !important;
+      width: 100%;
+      position: relative;
+    }
+
     img { max-width: 100%; height: auto; }
-    .brand-avatar {
-      width: 26px;
-      height: 26px;
-      border-radius: 9999px;
+    
+    /* Dinamik Marina Ambiyansı */
+    body {
+      background-color: #030712;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.35) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(217, 119, 6, 0.2) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(15, 23, 42, 0.8) 0px, transparent 100%),
+        linear-gradient(to bottom, rgba(3, 7, 18, 0.95), rgba(3, 7, 18, 0.98));
+      background-attachment: fixed;
+    }
+
+    .brand-logo-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: 11px;
+      font-size: 20px;
     }
+
+    /* Kayan Yazı Animasyonu */
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-container {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-flex;
+      width: max-content;
+      animation: marquee 26s linear infinite;
+    }
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    /* Kart Işıma Efekti (Glass Glow) */
+    .glass-card {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+      transition: all 0.25s ease;
+    }
+    @media (hover: hover) {
+      .glass-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(245, 158, 11, 0.45);
+        box-shadow: 0 15px 35px -10px rgba(245, 158, 11, 0.18);
+      }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: #030712; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #d97706; }
   </style>
 </head>
-<body class="bg-[#f6f7f8] dark:bg-slate-950 text-gray-800 dark:text-slate-100 flex flex-col min-h-screen transition-colors duration-200">
+<body class="text-slate-100 flex flex-col min-h-screen selection:bg-amber-500 selection:text-black">
 
-  <!-- Üst Bar -->
-  <header class="bg-[#003366] dark:bg-slate-900 text-white shadow-md sticky top-0 z-30 transition-colors">
-    <div class="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-4">
-      <div class="flex items-center gap-2 cursor-pointer" onclick="resetFilters()">
-        <span class="text-2xl font-black tracking-tight text-white">tekne<span class="text-[#ffcc00]">bende</span>.com</span>
+  <!-- ÜST KAYAN YAZI BANDI (Mobilde taşmayı kesen container) -->
+  <div class="marquee-container bg-gradient-to-r from-amber-600 via-amber-400 to-amber-600 text-slate-950 py-1.5 font-black text-[11px] sm:text-xs tracking-wider uppercase shadow-lg border-b border-amber-300/30">
+    <div class="marquee-track flex items-center">
+      <div class="flex items-center gap-6 sm:gap-10 pr-6 sm:pr-10">
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-crown text-slate-950"></i> Dünya Markalarına Ev Sahipliği Yapan SHOWROOM</span>
+        <span>&bull;</span>
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-anchor text-slate-950"></i> Lüks Yat & Tekne Kataloğu</span>
+        <span>&bull;</span>
+        <span>Azimut &bull; Riva &bull; Sunseeker &bull; Princess &bull; Ferretti &bull; Bénéteau &bull; Jeanneau &bull; Bavaria &bull; Hanse &bull; Dufour &bull; Lagoon &bull; Fountaine Pajot</span>
+        <span>&bull;</span>
       </div>
-
-      <!-- Arama Kutusu -->
-      <div class="flex-1 max-w-xl flex">
-        <input 
-          id="searchInput" 
-          type="text" 
-          placeholder="Marka, model veya ilan başlığı ara..." 
-          class="w-full px-4 py-2 text-sm text-gray-900 dark:text-gray-100 dark:bg-slate-800 rounded-l focus:outline-none"
-        >
-        <button id="searchBtn" class="bg-[#ffcc00] hover:bg-yellow-400 text-gray-900 px-5 font-bold text-sm rounded-r flex items-center gap-2">
-          <i class="fa-solid fa-magnifying-glass"></i> Ara
-        </button>
+      <div class="flex items-center gap-6 sm:gap-10 pr-6 sm:pr-10">
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-crown text-slate-950"></i> Dünya Markalarına Ev Sahipliği Yapan SHOWROOM</span>
+        <span>&bull;</span>
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-anchor text-slate-950"></i> Lüks Yat & Tekne Kataloğu</span>
+        <span>&bull;</span>
+        <span>Azimut &bull; Riva &bull; Sunseeker &bull; Princess &bull; Ferretti &bull; Bénéteau &bull; Jeanneau &bull; Bavaria &bull; Hanse &bull; Dufour &bull; Lagoon &bull; Fountaine Pajot</span>
+        <span>&bull;</span>
       </div>
-
-      <!-- Sağ Aksiyon Butonları -->
-      <div class="flex items-center gap-2 sm:gap-3">
-        <!-- Karanlık Mod Geçişi -->
-        <button onclick="toggleDarkMode()" title="Tema Değiştir" class="bg-sky-800/80 dark:bg-slate-800 hover:bg-sky-700 text-white p-2 rounded-lg text-sm transition">
-          <i id="themeIcon" class="fa-solid fa-moon"></i>
-        </button>
-
-        <!-- Karşılaştır Butonu -->
-        <button onclick="openCompareModal()" class="bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-semibold px-3 py-2 rounded flex items-center gap-1.5 transition">
-          <i class="fa-solid fa-scale-balanced"></i>
-          <span class="hidden sm:inline">Kıyasla</span>
-          <span id="compareCountBadge" class="bg-black/40 text-white text-[10px] px-1.5 py-0.2 rounded-full">0</span>
-        </button>
-
-        <!-- Favorilerim Butonu -->
-        <button id="favFilterBtn" onclick="toggleFavoriteFilter()" class="bg-sky-800/80 dark:bg-slate-800 hover:bg-sky-700 text-white text-xs sm:text-sm font-semibold px-3 py-2 rounded flex items-center gap-1.5 transition">
-          <i class="fa-solid fa-heart text-red-400"></i>
-          <span class="hidden sm:inline">Favorilerim</span>
-          <span id="favCountBadge" class="bg-red-500 text-white text-[10px] px-1.5 py-0.2 rounded-full">0</span>
-        </button>
-
-        <!-- İlan Ver Butonu -->
-        <button onclick="openCreateModal()" class="bg-[#1a73e8] hover:bg-blue-600 text-white text-xs sm:text-sm font-bold px-3.5 py-2 rounded flex items-center gap-1.5 shadow">
-          <i class="fa-solid fa-plus"></i> <span class="hidden sm:inline">İlan Ver</span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Kategori Yolu -->
-  <div class="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 py-2 text-xs text-gray-500 dark:text-gray-400">
-    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
-      <div class="flex items-center gap-1">
-        <span class="cursor-pointer hover:underline" onclick="resetFilters()">Vasıta</span> &gt; 
-        <span>Deniz Araçları</span> &gt; 
-        <strong id="breadcrumbLabel" class="text-gray-800 dark:text-gray-200">Tüm Tekne & Yat İlanları</strong>
-      </div>
-      <button onclick="resetFilters()" class="text-blue-600 dark:text-blue-400 hover:underline text-[11px] font-semibold flex items-center gap-1">
-        <i class="fa-solid fa-rotate-left"></i> Filtreleri Sıfırla
-      </button>
     </div>
   </div>
 
-  <!-- Ana İçerik -->
-  <main class="max-w-7xl mx-auto px-4 py-5 grid grid-cols-1 md:grid-cols-4 gap-6 flex-1">
-
-    <!-- Sol Menü -->
-    <aside class="md:col-span-1 space-y-4">
+  <!-- Üst Bar (Mobil Uyumlu Header) -->
+  <header class="bg-slate-950/80 backdrop-blur-xl border-b border-white/5 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-3 sm:px-4 py-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
       
-      <!-- Marka / Model Akordeon -->
-      <div class="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded p-4 shadow-sm">
-        <h3 class="text-xs font-bold text-[#003366] dark:text-sky-400 uppercase tracking-wider border-b dark:border-slate-800 pb-2 mb-3 flex items-center justify-between">
-          <span>Markalar & Modeller</span>
-          <span class="text-[10px] text-gray-400 font-normal">Açılır Sekme</span>
-        </h3>
-        <div id="accordionContainer" class="space-y-1 text-sm"></div>
+      <!-- Logo ve Sağ Dropdown Tek Satırda -->
+      <div class="flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5 cursor-pointer group" onclick="showBrandsView()">
+          <div class="w-9 h-9 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center text-slate-950 text-lg font-black shadow-lg shadow-amber-500/20 group-hover:rotate-6 transition-transform">
+            <i class="fa-solid fa-anchor"></i>
+          </div>
+          <div>
+            <span class="text-lg sm:text-xl font-black tracking-wider text-white">NAUTIC<span class="text-amber-400">SHOWROOM</span></span>
+            <span class="block text-[8px] sm:text-[9px] text-slate-400 uppercase tracking-widest font-semibold flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Resmi Model Kataloğu
+            </span>
+          </div>
+        </div>
+
+        <!-- Sağ Üst: TÜM MARKALAR AÇILIR MENÜSÜ (Mobilde kompakt) -->
+        <div class="relative" id="brandsDropdownContainer">
+          <button 
+            id="brandsDropdownBtn" 
+            onclick="toggleBrandsDropdown(event)" 
+            class="text-xs bg-slate-900 hover:bg-slate-800 text-slate-200 px-3 py-2 rounded-xl border border-slate-700/80 transition flex items-center gap-1.5 font-bold shadow"
+          >
+            <i class="fa-solid fa-layer-group text-amber-400"></i> 
+            <span class="hidden xs:inline sm:inline">Tüm Markalar</span>
+            <span class="inline xs:hidden sm:hidden">Markalar</span>
+            <i id="dropdownChevron" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform duration-200"></i>
+          </button>
+
+          <div 
+            id="brandsDropdownMenu" 
+            class="hidden absolute right-0 mt-2 w-64 sm:w-72 bg-slate-950/95 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden z-50 backdrop-blur-2xl transition-all max-h-80 overflow-y-auto"
+          >
+            <div class="p-2.5 bg-slate-900/80 border-b border-slate-800 flex items-center justify-between text-[11px] font-bold text-slate-400">
+              <span>DÜNYA MARKALARI</span>
+              <span class="text-amber-400" id="dropdownBrandCountBadge">12 Marka</span>
+            </div>
+            <div id="dropdownItemsList" class="divide-y divide-slate-800/50 p-1"></div>
+          </div>
+        </div>
       </div>
 
-      <!-- Fiyat ve Yıl Filtresi -->
-      <div class="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded p-4 shadow-sm space-y-3">
-        <h3 class="text-xs font-bold text-[#003366] dark:text-sky-400 uppercase tracking-wider border-b dark:border-slate-800 pb-2">Fiyat Aralığı (€)</h3>
-        <div class="grid grid-cols-2 gap-2">
-          <input type="number" id="minPriceInput" placeholder="Min €" class="border dark:border-slate-700 dark:bg-slate-800 dark:text-white rounded px-2 py-1.5 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none">
-          <input type="number" id="maxPriceInput" placeholder="Max €" class="border dark:border-slate-700 dark:bg-slate-800 dark:text-white rounded px-2 py-1.5 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none">
+      <!-- Arama Kutusu (Mobilde tam genişlik) -->
+      <div class="w-full sm:max-w-md">
+        <div class="relative">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+          <input 
+            id="globalSearchInput" 
+            type="text" 
+            placeholder="Marka veya model ara (Örn: Oceanis, Riva, Hanse)..." 
+            class="w-full pl-9 pr-3 py-1.5 sm:py-2 bg-slate-900/80 border border-slate-700/60 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/50 transition backdrop-blur"
+          >
         </div>
+      </div>
 
-        <h3 class="text-xs font-bold text-[#003366] dark:text-sky-400 uppercase tracking-wider border-b dark:border-slate-800 pb-2 pt-2">Model Yılı</h3>
-        <div class="grid grid-cols-2 gap-2">
-          <input type="number" id="minYearInput" placeholder="Min Yıl" class="border dark:border-slate-700 dark:bg-slate-800 dark:text-white rounded px-2 py-1.5 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none">
-          <input type="number" id="maxYearInput" placeholder="Max Yıl" class="border dark:border-slate-700 dark:bg-slate-800 dark:text-white rounded px-2 py-1.5 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none">
+    </div>
+  </header>
+
+  <!-- Kategori & Navigasyon Yolu (Breadcrumb) -->
+  <nav class="bg-slate-950/40 border-b border-white/5 py-2 text-[11px] sm:text-xs text-slate-400 backdrop-blur">
+    <div class="max-w-7xl mx-auto px-3 sm:px-4 flex items-center gap-1.5 overflow-x-auto whitespace-nowrap" id="breadcrumbArea">
+      <span class="cursor-pointer hover:text-amber-400 transition flex items-center gap-1" onclick="showBrandsView()"><i class="fa-solid fa-house text-amber-400"></i> Showroom</span>
+      <span class="text-slate-600">&gt;</span>
+      <span id="bcBrand" class="cursor-pointer hover:text-white hidden truncate max-w-[120px]"></span>
+      <span id="bcSeparator" class="text-slate-600 hidden">&gt;</span>
+      <span id="bcModel" class="text-amber-400 font-bold hidden truncate max-w-[140px]"></span>
+    </div>
+  </nav>
+
+  <!-- Ana İçerik Alanı -->
+  <main class="max-w-7xl mx-auto px-3 sm:px-4 py-6 flex-1 w-full">
+
+    <!-- 1. GÖRÜNÜM: MARKALAR LİSTESİ -->
+    <section id="brandsSection">
+      
+      <!-- Lüks Hero Bölümü -->
+      <div class="mb-6 sm:mb-8 text-center max-w-3xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider mb-3">
+          <i class="fa-solid fa-shield-halved"></i> 2026 World Class Marine Fleet
         </div>
+        <h1 class="text-2xl sm:text-4xl font-black text-white tracking-tight leading-tight">
+          Dünyanın Öncü Tekne Üreticileri
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-400 mt-2 max-w-xl mx-auto leading-relaxed px-2">
+          İncelemek istediğiniz tersaneyi seçin; modelleri, teknik verileri ve deniz mimarilerini yakından keşfedin.
+        </p>
 
-        <button onclick="applyRangeFilters()" class="w-full bg-[#003366] dark:bg-sky-700 hover:bg-blue-900 text-white text-xs font-bold py-1.5 rounded transition">
-          Filtrele
+        <!-- Canlı İstatistik Barı (Mobilde 2x2) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mt-5 text-xs max-w-2xl mx-auto">
+          <div class="glass-card p-2 sm:p-2.5 rounded-xl border border-white/5">
+            <span class="block text-slate-500 text-[9px] sm:text-[10px] uppercase font-bold">Tersaneler</span>
+            <strong class="text-amber-400 text-xs sm:text-sm font-black">12 Marka</strong>
+          </div>
+          <div class="glass-card p-2 sm:p-2.5 rounded-xl border border-white/5">
+            <span class="block text-slate-500 text-[9px] sm:text-[10px] uppercase font-bold">Katalog Modelleri</span>
+            <strong class="text-white text-xs sm:text-sm font-black">16 Model</strong>
+          </div>
+          <div class="glass-card p-2 sm:p-2.5 rounded-xl border border-white/5">
+            <span class="block text-slate-500 text-[9px] sm:text-[10px] uppercase font-bold">Gövde Tipleri</span>
+            <strong class="text-white text-xs sm:text-sm font-black">Motor & Yelken & Kat</strong>
+          </div>
+          <div class="glass-card p-2 sm:p-2.5 rounded-xl border border-white/5">
+            <span class="block text-slate-500 text-[9px] sm:text-[10px] uppercase font-bold">Veri Doğrulama</span>
+            <strong class="text-emerald-400 text-xs sm:text-sm font-black">%100 Doğrulanmış</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kategori Filtre Butonları (Mobilde yatay kaydırılabilir) -->
+      <div class="flex items-center justify-start sm:justify-center gap-2 mb-6 text-xs overflow-x-auto pb-2 scrollbar-none">
+        <button onclick="filterBrandCategory('all')" id="catBtn-all" class="px-3.5 py-1.5 rounded-xl bg-amber-500 text-slate-950 font-bold whitespace-nowrap shadow transition">Tüm Markalar (12)</button>
+        <button onclick="filterBrandCategory('motor')" id="catBtn-motor" class="px-3.5 py-1.5 rounded-xl glass-card text-slate-300 font-semibold whitespace-nowrap hover:text-white transition">Lüks Motor Yatlar (5)</button>
+        <button onclick="filterBrandCategory('sail')" id="catBtn-sail" class="px-3.5 py-1.5 rounded-xl glass-card text-slate-300 font-semibold whitespace-nowrap hover:text-white transition">Yelkenliler (5)</button>
+        <button onclick="filterBrandCategory('cat')" id="catBtn-cat" class="px-3.5 py-1.5 rounded-xl glass-card text-slate-300 font-semibold whitespace-nowrap hover:text-white transition">Katamaranlar (2)</button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" id="brandsGrid"></div>
+    </section>
+
+    <!-- 2. GÖRÜNÜM: SEÇİLEN MARKANIN MODELLERİ -->
+    <section id="modelsSection" class="hidden">
+      <div class="glass-card rounded-2xl sm:rounded-3xl p-5 sm:p-8 mb-6 flex flex-col sm:flex-row items-center justify-between gap-5 relative overflow-hidden border border-white/10">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left z-10 w-full">
+          <div id="brandBannerLogo" class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shadow-xl flex-shrink-0"></div>
+          <div class="flex-1">
+            <div class="inline-block px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-1" id="brandBannerOrigin">Menşei</div>
+            <h2 class="text-xl sm:text-3xl font-black text-white" id="brandBannerName">Marka Adı</h2>
+            <p class="text-xs text-slate-400 max-w-xl mt-1 leading-relaxed" id="brandBannerDesc">Açıklama</p>
+          </div>
+        </div>
+        <button onclick="showBrandsView()" class="w-full sm:w-auto text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl border border-slate-700 flex items-center justify-center gap-2 flex-shrink-0 transition">
+          <i class="fa-solid fa-arrow-left"></i> Markalara Dön
         </button>
       </div>
 
-      <!-- Gövde Tipi -->
-      <div class="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded p-4 shadow-sm">
-        <h3 class="text-xs font-bold text-[#003366] dark:text-sky-400 uppercase tracking-wider border-b dark:border-slate-800 pb-2 mb-3">Gövde Tipi</h3>
-        <div class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" name="hullType" value="Yelkenli" class="rounded text-[#003366]"> Yelkenli
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" name="hullType" value="Motoryat" class="rounded text-[#003366]"> Motoryat
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" name="hullType" value="Katamaran" class="rounded text-[#003366]"> Katamaran
-          </label>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Sağ İlan Tablosu -->
-    <section class="md:col-span-3">
-      <div class="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded p-3 mb-3 flex items-center justify-between text-xs sm:text-sm">
-        <span id="listingSummary" class="text-gray-600 dark:text-gray-300 font-medium">İlanlar yükleniyor...</span>
-        <div class="flex items-center gap-2">
-          <label for="sortSelect" class="text-gray-500 dark:text-gray-400 hidden sm:inline">Sıralama:</label>
-          <select id="sortSelect" class="border dark:border-slate-700 dark:bg-slate-800 dark:text-white rounded p-1.5 bg-gray-50 text-gray-700 text-xs focus:outline-none">
-            <option value="default">Gelişmiş Sıralama</option>
-            <option value="price-asc">Fiyat (Önce en düşük)</option>
-            <option value="price-desc">Fiyat (Önce en yüksek)</option>
-            <option value="year-desc">Model Yılı (En yeni)</option>
-          </select>
-        </div>
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-300">Üretimdeki & Efsane Modeller</h3>
+        <span class="text-xs text-slate-500 font-medium" id="modelsCountBadge">0 Model</span>
       </div>
 
-      <div class="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded shadow-sm overflow-hidden">
-        <div class="hidden md:grid grid-cols-12 gap-2 bg-[#f0f2f5] dark:bg-slate-800/60 p-2.5 text-xs font-bold text-gray-600 dark:text-gray-300 border-b border-gray-200 dark:border-slate-800">
-          <div class="col-span-2">Görsel</div>
-          <div class="col-span-4">İlan Başlığı & Özellikler</div>
-          <div class="col-span-2">Marka / Arma</div>
-          <div class="col-span-1 text-center">Yıl</div>
-          <div class="col-span-1 text-center">Boy</div>
-          <div class="col-span-1 text-right">Fiyat</div>
-          <div class="col-span-1 text-center">İşlemler</div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" id="modelsGrid"></div>
+    </section>
+
+    <!-- 3. GÖRÜNÜM: MODEL DETAY SAYFASI -->
+    <section id="detailSection" class="hidden">
+      <div class="mb-4 flex items-center justify-between">
+        <button onclick="backToModelsView()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3.5 py-1.5 rounded-lg border border-slate-700 flex items-center gap-2 transition">
+          <i class="fa-solid fa-arrow-left"></i> <span id="backToModelsBtnText">Modellere Dön</span>
+        </button>
+        <span class="text-[11px] text-slate-400" id="detailModelHeaderTag">Model İncelemesi</span>
+      </div>
+
+      <div class="glass-card rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+        
+        <!-- Fotoğraf & Başlık Banner (Mobilde boyutu tam uyumlu) -->
+        <div class="relative h-64 sm:h-96 md:h-[420px] w-full overflow-hidden bg-slate-950">
+          <img id="detailImg" src="" alt="Model" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+          
+          <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3">
+            <div>
+              <span class="bg-amber-500 text-slate-950 text-[10px] sm:text-xs font-black px-2.5 py-0.5 rounded uppercase tracking-wider" id="detailType">Yelkenli</span>
+              <h1 class="text-xl sm:text-4xl font-black text-white mt-1.5 leading-tight" id="detailTitle">Model Başlığı</h1>
+              <p class="text-xs text-slate-300 mt-0.5" id="detailSubTitle">Model Serisi</p>
+            </div>
+            <div class="glass-card px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-xl text-left sm:text-right border border-white/10">
+              <span class="text-[9px] text-slate-400 block uppercase font-semibold">Tavsiye Başlangıç</span>
+              <span class="text-lg sm:text-2xl font-black text-amber-400" id="detailPrice">-- €</span>
+            </div>
+          </div>
         </div>
-        <div id="boatTableBody" class="divide-y divide-gray-100 dark:divide-slate-800"></div>
+
+        <!-- Açıklama ve Teknik Tablo -->
+        <div class="p-4 sm:p-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-5">
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-white mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-compass-drafting text-amber-400"></i> Tasarım ve Model Felsefesi
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed bg-slate-900/60 p-3.5 rounded-xl border border-slate-800" id="detailLongDesc"></p>
+            </div>
+
+            <div>
+              <h3 class="text-xs sm:text-sm font-bold text-white mb-2.5 flex items-center gap-2">
+                <i class="fa-solid fa-list-check text-amber-400"></i> Öne Çıkan Standart Donanımlar
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300" id="detailHighlights"></div>
+            </div>
+          </div>
+
+          <div class="glass-card rounded-xl p-4 space-y-3 h-fit border border-white/10">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400 border-b border-slate-800 pb-2 flex items-center gap-2">
+              <i class="fa-solid fa-sliders"></i> Teknik Spesifikasyonlar
+            </h3>
+
+            <div class="text-xs divide-y divide-slate-800/80 space-y-2">
+              <div class="pt-2 flex justify-between"><span class="text-slate-400">Üretici Marka:</span><strong class="text-white" id="specBrand">--</strong></div>
+              <div class="pt-2 flex justify-between"><span class="text-slate-400">Model Serisi:</span><strong class="text-white" id="specModel">--</strong></div>
+              <div class="pt-2 flex justify-between"><span class="text-slate-400">Gövde / Tip:</span><strong class="text-white" id="specType">--</strong></div>
+              <div class="pt-2 flex justify-between"><span class="text-slate-400">Tam Boy (LOA):</span><strong class="text-white" id="specLength">--</strong></div>
+              <div class="pt-2 flex justify-between"><span class="text-slate-400">Genişlik (En):</span><strong class="text-white" id="specBeam">--</strong></div>
+              <div class="pt-2 flex justify-between"><span class="text-slate-400">Su Çekimi (Draft):</span><strong class="text-white" id="specDraft">--</strong></div>
+              <div class="pt-2 flex justify-between"><span class="text-slate-400">Kabin & WC:</span><strong class="text-white" id="specCabins">--</strong></div>
+              <div class="pt-2 flex justify-between"><span class="text-slate-400">Motor Seçenekleri:</span><strong class="text-white text-right max-w-[160px] truncate" id="specEngine">--</strong></div>
+              <div class="pt-2 flex justify-between"><span class="text-slate-400">Yakıt Kapasitesi:</span><strong class="text-white" id="specFuel">--</strong></div>
+              <div class="pt-2 flex justify-between"><span class="text-slate-400">Tatlı Su Deposu:</span><strong class="text-white" id="specWater">--</strong></div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
   </main>
 
-  <!-- ALT BİLGİ (FOOTER & İMZA) -->
-  <footer class="bg-slate-900 text-slate-300 mt-12 border-t border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 py-8">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center border-b border-slate-800 pb-6 text-xs">
-        <div>
-          <span class="text-lg font-black text-white">tekne<span class="text-[#ffcc00]">bende</span>.com</span>
-          <p class="text-slate-400 mt-1">Türkiye'nin en kapsamlı lüks tekne, yelkenli ve katamaran pazaryeri.</p>
-        </div>
-        <div class="text-center text-slate-400">
-          <p>&copy; 2026 teknebende.com Tüm hakları saklıdır.</p>
-          <p class="text-[11px] text-slate-500 mt-0.5">Gizlilik &bull; Kullanım Koşulları &bull; Güvenli Alışveriş</p>
-        </div>
-        
-        <!-- Özel Geliştirici İmzası -->
-        <div class="flex md:justify-end">
-          <div class="inline-flex items-center gap-2.5 bg-slate-800/90 border border-slate-700/80 px-3.5 py-2 rounded-full shadow-inner">
-            <span class="relative flex h-2.5 w-2.5">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-            </span>
-            <div class="text-[11px]">
-              <span class="text-slate-400">Crafted & Engineered by</span>
-              <span class="font-bold text-amber-400 ml-1 tracking-wide">CAFER ÇELİK</span>
-            </div>
-          </div>
-        </div>
+  <!-- Alt Bilgi (Footer) -->
+  <footer class="bg-slate-950/80 border-t border-white/5 py-6 text-xs text-slate-400 backdrop-blur">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+      <div>
+        <span class="font-bold text-white tracking-wider">NAUTIC SHOWROOM</span> &bull; Premium Marine Fleet Experience
       </div>
-
-      <div class="pt-4 text-center text-[10px] text-slate-500">
-        Marine Tech & Yacht Listing Platform &bull; Developed with HTML5, Tailwind CSS & JavaScript
+      
+      <div class="inline-flex items-center gap-2 glass-card px-3.5 py-1.5 rounded-full text-slate-300 border border-white/5">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-[10px] sm:text-[11px]">Showroom Engineered by <strong class="text-amber-400 tracking-wide">CAFER ÇELİK</strong></span>
       </div>
     </div>
   </footer>
 
-  <!-- 1. İLAN DETAY MODALI (Kredi Hesaplayıcı & WhatsApp Entegre) -->
-  <div id="detailModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-    <div class="bg-white dark:bg-slate-900 dark:text-gray-100 w-full max-w-4xl rounded-lg shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col">
-      <div class="bg-[#003366] dark:bg-slate-800 text-white px-5 py-3 flex items-center justify-between">
-        <div>
-          <span class="text-xs text-yellow-400 font-semibold" id="modalCategoryPath">Vasıta > Deniz Araçları</span>
-          <h2 class="text-base sm:text-lg font-bold leading-tight" id="modalTitle">Tekne Başlığı</h2>
-        </div>
-        <button onclick="closeModal()" class="text-gray-300 hover:text-white text-2xl font-bold ml-4">&times;</button>
-      </div>
-
-      <div class="p-5 overflow-y-auto space-y-6">
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-          
-          <!-- Sol Galeri -->
-          <div class="md:col-span-7 space-y-2">
-            <div class="h-64 sm:h-80 rounded-lg overflow-hidden bg-gray-100 dark:bg-slate-800 border dark:border-slate-700">
-              <img id="modalMainImg" src="" alt="Tekne" class="w-full h-full object-cover transition duration-200">
-            </div>
-            
-            <div id="modalThumbnails" class="flex items-center gap-2 overflow-x-auto py-1"></div>
-
-            <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 pt-1">
-              <div><i class="fa-solid fa-camera"></i> <span id="modalPhotoCount">16 Fotoğraf</span></div>
-              <div><i class="fa-solid fa-location-dot text-red-500"></i> <span id="modalLocation">Muğla / Marmaris</span></div>
-            </div>
-
-            <!-- Deniz Taşıtı Kredi Hesaplama Kartı -->
-            <div class="bg-blue-50/60 dark:bg-slate-800/80 border border-blue-200 dark:border-slate-700 rounded-lg p-3.5 space-y-2.5">
-              <div class="flex items-center justify-between text-xs font-bold text-[#003366] dark:text-sky-400">
-                <span class="flex items-center gap-1.5"><i class="fa-solid fa-calculator"></i> Tekne Kredisi & Taksit Hesapla</span>
-                <span class="text-[10px] text-gray-500 dark:text-gray-400">%2.49 Aylık Faiz</span>
-              </div>
-              <div class="grid grid-cols-2 gap-2 text-xs">
-                <div>
-                  <label class="block text-[11px] text-gray-600 dark:text-gray-300 mb-0.5">Peşinat (€)</label>
-                  <input type="number" id="calcDownPayment" oninput="calculateLoan()" placeholder="Örn: 50000" class="w-full border dark:border-slate-700 dark:bg-slate-900 rounded p-1 text-xs">
-                </div>
-                <div>
-                  <label class="block text-[11px] text-gray-600 dark:text-gray-300 mb-0.5">Vade (Ay)</label>
-                  <select id="calcMonths" onchange="calculateLoan()" class="w-full border dark:border-slate-700 dark:bg-slate-900 rounded p-1 text-xs">
-                    <option value="12">12 Ay</option>
-                    <option value="24">24 Ay</option>
-                    <option value="36" selected>36 Ay</option>
-                    <option value="48">48 Ay</option>
-                    <option value="60">60 Ay</option>
-                  </select>
-                </div>
-              </div>
-              <div class="bg-white dark:bg-slate-900 border dark:border-slate-700 p-2 rounded flex items-center justify-between text-xs">
-                <span class="text-gray-600 dark:text-gray-400">Tahmini Aylık Taksit:</span>
-                <strong id="calcMonthlyResult" class="text-base text-red-600 dark:text-red-400 font-black">-- €</strong>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sağ Teknik Tablo -->
-          <div class="md:col-span-5 bg-gray-50 dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700 rounded-lg p-4 flex flex-col justify-between">
-            <div>
-              <div class="text-2xl font-black text-red-600 dark:text-red-400 mb-3" id="modalPrice">265.000 €</div>
-              <div class="text-xs divide-y divide-gray-200 dark:divide-slate-700 border-t border-b border-gray-200 dark:border-slate-700">
-                <div class="py-1.5 flex justify-between"><span class="text-gray-500 dark:text-gray-400">İlan No</span><strong id="modalAdNo">#10829381</strong></div>
-                <div class="py-1.5 flex justify-between"><span class="text-gray-500 dark:text-gray-400">İlan Tarihi</span><strong id="modalAdDate">07 Ekim 2026</strong></div>
-                <div class="py-1.5 flex justify-between"><span class="text-gray-500 dark:text-gray-400">Marka</span><strong class="text-[#003366] dark:text-sky-400" id="modalBrand">Bénéteau</strong></div>
-                <div class="py-1.5 flex justify-between"><span class="text-gray-500 dark:text-gray-400">Model</span><strong id="modalModel">Oceanis 40.1</strong></div>
-                <div class="py-1.5 flex justify-between"><span class="text-gray-500 dark:text-gray-400">Tipi</span><strong id="modalType">Yelkenli</strong></div>
-                <div class="py-1.5 flex justify-between"><span class="text-gray-500 dark:text-gray-400">Yıl</span><strong id="modalYear">2021</strong></div>
-                <div class="py-1.5 flex justify-between"><span class="text-gray-500 dark:text-gray-400">Tam Boy</span><strong id="modalLength">12.87 m</strong></div>
-                <div class="py-1.5 flex justify-between"><span class="text-gray-500 dark:text-gray-400">Genişlik (En)</span><strong id="modalBeam">4.18 m</strong></div>
-                <div class="py-1.5 flex justify-between"><span class="text-gray-500 dark:text-gray-400">Kabin Sayısı</span><strong id="modalCabins">3 Kabin</strong></div>
-                <div class="py-1.5 flex justify-between"><span class="text-gray-500 dark:text-gray-400">Motor Gücü</span><strong id="modalEngine">Yanmar 45 HP</strong></div>
-                <div class="py-1.5 flex justify-between"><span class="text-gray-500 dark:text-gray-400">Bayrak</span><strong>Türkiye (TR)</strong></div>
-                <div class="py-1.5 flex justify-between"><span class="text-gray-500 dark:text-gray-400">Kimden</span><strong>Sahibinden</strong></div>
-              </div>
-            </div>
-
-            <!-- İletişim & WhatsApp Butonları -->
-            <div class="mt-4 space-y-2">
-              <a id="modalWhatsappLink" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded text-xs flex items-center justify-center gap-2 transition">
-                <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp ile Satıcıya Yaz
-              </a>
-              <button class="w-full bg-[#1a73e8] hover:bg-blue-600 text-white font-bold py-2 rounded text-xs flex items-center justify-center gap-2">
-                <i class="fa-solid fa-phone"></i> Satıcıyı Ara (0532 123 45 67)
-              </button>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="border-t dark:border-slate-700 pt-4">
-          <h3 class="text-sm font-bold text-[#003366] dark:text-sky-400 mb-2">Açıklama</h3>
-          <p id="modalDescription" class="text-xs text-gray-700 dark:text-gray-300 leading-relaxed bg-gray-50 dark:bg-slate-800 p-4 rounded border dark:border-slate-700"></p>
-        </div>
-      </div>
-
-      <div class="bg-gray-100 dark:bg-slate-800 px-5 py-2.5 flex justify-end border-t dark:border-slate-700">
-        <button onclick="closeModal()" class="bg-gray-300 dark:bg-slate-700 hover:bg-gray-400 dark:hover:bg-slate-600 text-gray-800 dark:text-gray-200 text-xs font-bold px-4 py-1.5 rounded">
-          Kapat
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- 2. YENİ İLAN / DÜZENLEME FORMU (MODAL) -->
-  <div id="createModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-    <div class="bg-white dark:bg-slate-900 dark:text-gray-100 w-full max-w-2xl rounded-lg shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col">
-      <div class="bg-[#003366] dark:bg-slate-800 text-white px-5 py-3 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-ship text-[#ffcc00]"></i>
-          <h2 id="createModalTitle" class="text-base font-bold">Yeni Tekne / Yat İlanı Yayınla</h2>
-        </div>
-        <button onclick="closeCreateModal()" class="text-gray-300 hover:text-white text-2xl font-bold">&times;</button>
-      </div>
-
-      <form id="createAdForm" onsubmit="handleSaveAd(event)" class="p-5 overflow-y-auto space-y-4 text-xs">
-        <input type="hidden" id="editBoatId" value="">
-
-        <div>
-          <label class="block font-bold mb-1">İlan Başlığı *</label>
-          <input required type="text" id="newTitle" placeholder="Örn: 2022 Temiz Aile Teknesi - Bakımları Yeni" class="w-full border dark:border-slate-700 dark:bg-slate-800 rounded px-3 py-2 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none">
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold mb-1">Marka *</label>
-            <select required id="newBrand" class="w-full border dark:border-slate-700 dark:bg-slate-800 rounded px-2 py-2 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none">
-              <option value="Bénéteau">Bénéteau</option>
-              <option value="Jeanneau">Jeanneau</option>
-              <option value="Bavaria">Bavaria</option>
-              <option value="Sunseeker">Sunseeker</option>
-              <option value="Azimut">Azimut</option>
-              <option value="Lagoon">Lagoon</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-bold mb-1">Model Kodu *</label>
-            <input required type="text" id="newModel" placeholder="Örn: Oceanis 40.1" class="w-full border dark:border-slate-700 dark:bg-slate-800 rounded px-3 py-2 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none">
-          </div>
-        </div>
-
-        <div class="grid grid-cols-3 gap-3">
-          <div>
-            <label class="block font-bold mb-1">Gövde Tipi *</label>
-            <select required id="newType" class="w-full border dark:border-slate-700 dark:bg-slate-800 rounded px-2 py-2 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none">
-              <option value="Yelkenli">Yelkenli</option>
-              <option value="Motoryat">Motoryat</option>
-              <option value="Katamaran">Katamaran</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-bold mb-1">Model Yılı *</label>
-            <input required type="number" id="newYear" min="1980" max="2027" value="2022" class="w-full border dark:border-slate-700 dark:bg-slate-800 rounded px-3 py-2 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none">
-          </div>
-          <div>
-            <label class="block font-bold mb-1">Fiyat (€) *</label>
-            <input required type="number" id="newPrice" placeholder="Örn: 250000" class="w-full border dark:border-slate-700 dark:bg-slate-800 rounded px-3 py-2 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none">
-          </div>
-        </div>
-
-        <div class="grid grid-cols-3 gap-3">
-          <div>
-            <label class="block font-bold mb-1">Tam Boy (m) *</label>
-            <input required type="number" step="0.1" id="newLength" placeholder="13.5" class="w-full border dark:border-slate-700 dark:bg-slate-800 rounded px-3 py-2 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none">
-          </div>
-          <div>
-            <label class="block font-bold mb-1">Kabin Sayısı</label>
-            <input type="number" id="newCabins" value="3" class="w-full border dark:border-slate-700 dark:bg-slate-800 rounded px-3 py-2 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none">
-          </div>
-          <div>
-            <label class="block font-bold mb-1">Konum *</label>
-            <input required type="text" id="newLocation" placeholder="Muğla / Marmaris" class="w-full border dark:border-slate-700 dark:bg-slate-800 rounded px-3 py-2 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none">
-          </div>
-        </div>
-
-        <!-- Fotoğraf Seçimi (Dosyadan veya Linkten) -->
-        <div class="grid grid-cols-2 gap-3 bg-gray-50 dark:bg-slate-800 p-2.5 rounded border dark:border-slate-700">
-          <div>
-            <label class="block font-bold mb-1">Bilgisayardan Fotoğraf Yükle</label>
-            <input type="file" id="newFileInput" accept="image/*" class="w-full text-[11px] text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-          </div>
-          <div>
-            <label class="block font-bold mb-1">Veya Fotoğraf Linki (URL)</label>
-            <input type="url" id="newImage" placeholder="https://..." class="w-full border dark:border-slate-700 dark:bg-slate-900 rounded px-2 py-1.5 text-xs focus:outline-none">
-          </div>
-        </div>
-
-        <div>
-          <label class="block font-bold mb-1">İlan Açıklaması</label>
-          <textarea id="newDescription" rows="3" placeholder="Teknenin detayları, donanım listesi..." class="w-full border dark:border-slate-700 dark:bg-slate-800 rounded px-3 py-2 text-xs focus:outline-none"></textarea>
-        </div>
-
-        <div class="flex justify-end gap-2 pt-3 border-t dark:border-slate-800">
-          <button type="button" onclick="closeCreateModal()" class="bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 text-gray-700 dark:text-gray-200 px-4 py-2 rounded font-bold">İptal</button>
-          <button type="submit" id="saveAdBtn" class="bg-[#1a73e8] hover:bg-blue-600 text-white px-5 py-2 rounded font-bold">+ İlanı Kaydet</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- 3. İKİ TEKNEYİ KIYASLAMA / KARŞILAŞTIRMA MODALI -->
-  <div id="compareModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-    <div class="bg-white dark:bg-slate-900 dark:text-gray-100 w-full max-w-4xl rounded-lg shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col">
-      <div class="bg-amber-600 text-white px-5 py-3 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-scale-balanced"></i>
-          <h2 class="text-base font-bold">Tekne Karşılaştırma Tablosu (Kıyasla)</h2>
-        </div>
-        <button onclick="closeCompareModal()" class="text-gray-200 hover:text-white text-2xl font-bold">&times;</button>
-      </div>
-
-      <div class="p-5 overflow-y-auto" id="compareContent">
-        <!-- JS ile 2 tekne yan yana render edilecek -->
-      </div>
-
-      <div class="bg-gray-100 dark:bg-slate-800 px-5 py-2.5 flex justify-between border-t dark:border-slate-700">
-        <button onclick="clearCompareList()" class="text-xs text-red-600 hover:underline font-semibold">Kıyaslama Listesini Temizle</button>
-        <button onclick="closeCompareModal()" class="bg-gray-300 dark:bg-slate-700 text-xs font-bold px-4 py-1.5 rounded">Kapat</button>
-      </div>
-    </div>
-  </div>
-
   <script>
-    const brandHierarchy = [
-      { name: "Bénéteau", color: "bg-blue-900 text-white", icon: "fa-anchor", models: ["Oceanis 40.1", "Oceanis 46.1", "First 36"] },
-      { name: "Jeanneau", color: "bg-sky-700 text-white", icon: "fa-compass", models: ["Sun Odyssey 440", "Sun Odyssey 490", "Cap Camarat 9.0"] },
-      { name: "Bavaria", color: "bg-indigo-800 text-white", icon: "fa-gem", models: ["Cruiser 46", "Cruiser 37", "C42"] },
-      { name: "Sunseeker", color: "bg-amber-600 text-white", icon: "fa-sun", models: ["Predator 55", "Manhattan 68", "Superhawk 55"] },
-      { name: "Azimut", color: "bg-slate-900 text-white", icon: "fa-crown", models: ["Flybridge 50", "Atlantis 45", "Grande 27M"] },
-      { name: "Lagoon", color: "bg-teal-700 text-white", icon: "fa-water", models: ["Lagoon 42", "Lagoon 46", "Lagoon 50"] }
+    const showroomData = [
+      // 1. AZIMUT YACHTS
+      {
+        id: "azimut",
+        name: "Azimut Yachts",
+        country: "İtalya",
+        category: "motor",
+        founded: "1969",
+        badge: { bg: "bg-slate-800 text-white", icon: "fa-crown" },
+        description: "İtalyan tasarımı, ileri teknoloji ve estetiği bir araya getiren dünyaca ünlü bir lüks motoryat lideridir.",
+        models: [
+          {
+            id: "azimut-fly-50",
+            name: "Flybridge 50",
+            series: "Flybridge Lüks Seri",
+            type: "Flybridge Motoryat",
+            price: "1.100.000 €",
+            image: "images/azimut-50.jpg",
+            length: "16.10 m",
+            beam: "4.66 m",
+            draft: "1.52 m",
+            cabins: "3 Misafir Kabini + 1 Mürettebat",
+            engine: "2x Volvo D11 (725 HP)",
+            fuel: "2.400 L",
+            water: "590 L",
+            description: "Stefano Righini imzalı ikonik köpekbalığı pencereleri ve Carlo Galeazzi sıcak İtalyan iç mekan tasarımı.",
+            highlights: [
+              "Geniş üst güvertede entegre ıslak bar ve barbekü",
+              "Tam boy armatör süiti ve özel banyosu",
+              "Seakeeper jiroskopik dengeleyici donanımı",
+              "Hidrolik indirmeli kıç servis botu platformu"
+            ]
+          },
+          {
+            id: "azimut-atlantis-45",
+            name: "Atlantis 45",
+            series: "Atlantis Sport Coupe Serisi",
+            type: "Sport Coupe Motoryat",
+            price: "720.000 €",
+            image: "images/azimut-45.jpg",
+            length: "14.61 m",
+            beam: "4.25 m",
+            draft: "1.10 m",
+            cabins: "2 Kabin / 2 Banyo",
+            engine: "2x Volvo IPS 650 (480 HP)",
+            fuel: "1.000 L",
+            water: "350 L",
+            description: "Dinamik çizgileri, geniş güneşlenme alanları ve 35 knot hızıyla sportif aile motoryatı.",
+            highlights: [
+              "35 Knot maksimum hız",
+              "IPS Joystick manevra kolaylığı",
+              "Geniş elektrikli açılır tavan"
+            ]
+          }
+        ]
+      },
+
+      // 2. RIVA
+      {
+        id: "riva",
+        name: "Riva",
+        country: "İtalya",
+        category: "motor",
+        founded: "1842",
+        badge: { bg: "bg-emerald-700 text-white", icon: "fa-gem" },
+        description: "1842 yılında kurulan, ahşap işçiliği ve ikonik nostaljik İtalyan tarzıyla bilinen efsanevi bir lüks üreticidir.",
+        models: [
+          {
+            id: "riva-aquariva",
+            name: "Aquariva Super",
+            series: "İkonik Open Serisi",
+            type: "Lüks Sürat Teknesi",
+            price: "850.000 €",
+            image: "images/riva-aquariva.jpg",
+            length: "10.07 m",
+            beam: "2.80 m",
+            draft: "0.96 m",
+            cabins: "1 Gündüz Kabini",
+            engine: "2x Yanmar 370 HP",
+            fuel: "480 L",
+            water: "130 L",
+            description: "Efsanevi Riva Aquarama'nın modern varisi. 20 kat özel cila ile parlatılmış maun güverte.",
+            highlights: [
+              "20 kat el vernikli maun ve akçaağaç güverte",
+              "41 knot maksimum hız ve çift şanzıman",
+              "Gizlenebilir elektronik bimini tente"
+            ]
+          },
+          {
+            id: "riva-56-rivale",
+            name: "56' Rivale",
+            series: "Open & Hardtop Serisi",
+            type: "Lüks Spor Motoryat",
+            price: "1.900.000 €",
+            image: "images/riva-rivale.jpg",
+            length: "17.27 m",
+            beam: "4.74 m",
+            draft: "1.45 m",
+            cabins: "3 Kabin / 2 Banyo",
+            engine: "2x MAN 1200 HP",
+            fuel: "2.300 L",
+            water: "400 L",
+            description: "Keskin hatları, metalik gövde boyası ve 38 knot maksimum hızıyla saf İtalyan gücü.",
+            highlights: [
+              "38 knot sürat performansı",
+              "Özel alaşımlı cam rüzgarlık",
+              "Williams Jet Tender garajı"
+            ]
+          }
+        ]
+      },
+
+      // 3. SUNSEEKER
+      {
+        id: "sunseeker",
+        name: "Sunseeker",
+        country: "İngiltere",
+        category: "motor",
+        founded: "1969",
+        badge: { bg: "bg-amber-600 text-white", icon: "fa-sun" },
+        description: "İngiltere merkezli marka, yüksek performanslı ve sportif lüks motor yatlarıyla tanınır.",
+        models: [
+          {
+            id: "predator-55",
+            name: "Predator 55 EVO",
+            series: "Predator Lüks Spor Serisi",
+            type: "Motoryat",
+            price: "1.250.000 €",
+            image: "images/sunseeker-55.jpg",
+            length: "17.05 m",
+            beam: "4.48 m",
+            draft: "1.33 m",
+            cabins: "2 Lüks Süit Kabin",
+            engine: "2x Volvo IPS 950 (1450 HP)",
+            fuel: "1.800 L",
+            water: "450 L",
+            description: "Predator 55 EVO, agresif dış hatları ve karbon fiber detaylarıyla 34 knot hıza zahmetsizce ulaşır.",
+            highlights: [
+              "34 Knot maksimum sürat ve dinamik denge",
+              "Joystick kontrollü IPS yanaşma sistemi",
+              "Hidrolik bot garajı ve yüzme platformu"
+            ]
+          },
+          {
+            id: "manhattan-68",
+            name: "Manhattan 68",
+            series: "Flybridge Serisi",
+            type: "Flybridge Motoryat",
+            price: "2.850.000 €",
+            image: "images/sunseeker-68.jpg",
+            length: "21.10 m",
+            beam: "5.26 m",
+            draft: "1.60 m",
+            cabins: "4 Misafir Kabini + Mürettebat",
+            engine: "2x MAN V8 1200 HP",
+            fuel: "4.000 L",
+            water: "900 L",
+            description: "Geniş flybridge güvertesi ve Beach Club alanı ile 5 yıldızlı süper lüks otel konforu.",
+            highlights: [
+              "Özel Beach Club alanı ve duş platformu",
+              "Hardtop tavanlı geniş flybridge",
+              "Seakeeper jiroskopik stabilizatör"
+            ]
+          }
+        ]
+      },
+
+      // 4. PRINCESS YACHTS
+      {
+        id: "princess",
+        name: "Princess Yachts",
+        country: "İngiltere",
+        category: "motor",
+        founded: "1965",
+        badge: { bg: "bg-blue-900 text-white", icon: "fa-chess-queen" },
+        description: "İngiliz zarafetini konforla buluşturan, geniş sınıf aralığında lüks motor yatlar üreten bir devdir.",
+        models: [
+          {
+            id: "princess-f55",
+            name: "Princess F55",
+            series: "F Class Flybridge Serisi",
+            type: "Flybridge Motoryat",
+            price: "1.650.000 €",
+            image: "images/princess-55.jpg",
+            length: "17.60 m",
+            beam: "4.87 m",
+            draft: "1.46 m",
+            cabins: "3 Lüks Kabin / 2 Banyo",
+            engine: "2x Volvo D13 (900 HP)",
+            fuel: "2.750 L",
+            water: "600 L",
+            description: "Princess'in ikonik derin V gövde mimarisi dalgalı denizlerde sarsıntısız yumuşak seyir sunar.",
+            highlights: [
+              "Derin V gövde ile üstün açık deniz konforu",
+              "Flybridge güvertesinde geniş L koltuk ve wetbar",
+              "360 derece kesintisiz cam manzarası"
+            ]
+          }
+        ]
+      },
+
+      // 5. FERRETTI YACHTS
+      {
+        id: "ferretti",
+        name: "Ferretti Yachts",
+        country: "İtalya",
+        category: "motor",
+        founded: "1968",
+        badge: { bg: "bg-red-700 text-white", icon: "fa-shield-halved" },
+        description: "İtalyan denizcilik geleneğinin en güçlü temsilcilerindendir.",
+        models: [
+          {
+            id: "ferretti-500",
+            name: "Ferretti 500",
+            series: "Modern Flybridge Serisi",
+            type: "Flybridge Motoryat",
+            price: "1.150.000 €",
+            image: "images/ferretti-500.jpg",
+            length: "15.33 m",
+            beam: "4.33 m",
+            draft: "1.23 m",
+            cabins: "3 Kabin / 2 Banyo",
+            engine: "2x Cummins QSB 6.7 (550 HP)",
+            fuel: "1.400 L",
+            water: "530 L",
+            description: "'Just Like Home' felsefesiyle ev konforunu denize taşıyan ödüllü model.",
+            highlights: [
+              "Geniş panoramik flybridge güvertesi",
+              "Suya batan hidrolik yüzme platformu",
+              "Açılır kıç ayna açık hava barı"
+            ]
+          }
+        ]
+      },
+
+      // 6. BENETEAU
+      {
+        id: "beneteau",
+        name: "Bénéteau",
+        country: "Fransa",
+        category: "sail",
+        founded: "1884",
+        badge: { bg: "bg-blue-600 text-white", icon: "fa-anchor" },
+        description: "1884'te Fransa'da kurulan, Oceanis ve First serileriyle dünyanın en büyük seri yelkenli üreticilerinden biridir.",
+        models: [
+          {
+            id: "oceanis-40-1",
+            name: "Oceanis 40.1",
+            series: "Oceanis Gezi Serisi",
+            type: "Yelkenli",
+            price: "280.000 €",
+            image: "images/beneteau-40.jpg",
+            length: "12.87 m",
+            beam: "4.18 m",
+            draft: "2.17 m",
+            cabins: "3 veya 4 Kabin / 2 WC",
+            engine: "Yanmar 45 HP Dizel",
+            fuel: "195 L",
+            water: "235 L",
+            description: "Marc Lombard mimarisiyle tasarlanan Oceanis 40.1, sınıfının en geniş kokpit alanını sunar.",
+            highlights: [
+              "Elektrikli açılır geniş yüzme platformu",
+              "Çift dümen dolabı ve seyir ekranları",
+              "Sarma sistem ana yelken ve flok"
+            ]
+          },
+          {
+            id: "first-36",
+            name: "First 36",
+            series: "First Yarış & Performans",
+            type: "Yarış & Gezi Yelkenlisi",
+            price: "245.000 €",
+            image: "images/beneteau-36.jpg",
+            length: "11.00 m",
+            beam: "3.80 m",
+            draft: "2.25 m",
+            cabins: "3 Kabin / 1 WC",
+            engine: "Yanmar 29 HP",
+            fuel: "70 L",
+            water: "200 L",
+            description: "Hafif rüzgarlarda bile kayıcı gövdesiyle çift haneli hızlara ulaşan safkan yarış teknesi.",
+            highlights: [
+              "Ultra hafif karbon takviyeli kompozit gövde",
+              "Yarış ve gezi moduna uyumlu modüler kokpit",
+              "Asimetrik balon yelken donanımı"
+            ]
+          }
+        ]
+      },
+
+      // 7. JEANNEAU
+      {
+        id: "jeanneau",
+        name: "Jeanneau",
+        country: "Fransa",
+        category: "sail",
+        founded: "1957",
+        badge: { bg: "bg-sky-600 text-white", icon: "fa-compass" },
+        description: "Sun Odyssey ve Sun Fast serileriyle yelkende konforu ve performansı buluşturan popüler bir Fransız markasıdır.",
+        models: [
+          {
+            id: "sun-odyssey-440",
+            name: "Sun Odyssey 440",
+            series: "Sun Odyssey Gezi Serisi",
+            type: "Yelkenli",
+            price: "270.000 €",
+            image: "images/jeanneau-440.jpg",
+            length: "13.39 m",
+            beam: "4.29 m",
+            draft: "2.20 m",
+            cabins: "3 Kabin / 2 Banyo",
+            engine: "Yanmar 45 HP",
+            fuel: "200 L",
+            water: "330 L",
+            description: "Walk-around kesintisiz basamaksız yan güverte geçişiyle devrim yaratan ödüllü gezi teknesi.",
+            highlights: [
+              "Basamaksız Walk-Around eğimsiz yan güverte",
+              "Şezlonga dönüşebilen kokpit oturma grubu",
+              "Geniş ada mutfak ve ada salon masası"
+            ]
+          }
+        ]
+      },
+
+      // 8. BAVARIA
+      {
+        id: "bavaria",
+        name: "Bavaria Yachts",
+        country: "Almanya",
+        category: "sail",
+        founded: "1978",
+        badge: { bg: "bg-indigo-700 text-white", icon: "fa-gem" },
+        description: "Alman mühendisliğini ekonomik ve sağlam Cruiser serileriyle birleştiren yaygın bir üreticidir.",
+        models: [
+          {
+            id: "cruiser-46",
+            name: "Cruiser 46",
+            series: "Cruiser Aile Serisi",
+            type: "Yelkenli",
+            price: "260.000 €",
+            image: "images/bavaria-46.jpg",
+            length: "14.27 m",
+            beam: "4.35 m",
+            draft: "2.10 m",
+            cabins: "3 veya 4 Kabin esnek",
+            engine: "Volvo Penta 75 HP",
+            fuel: "210 L",
+            water: "360 L",
+            description: "Dünyanın en popüler 46 fitlik yelkenlilerinden biri; sağlam gövde ve esnek kabin bölmesi.",
+            highlights: [
+              "Çift dümen ve çift dümen palası stabilitesi",
+              "Masif tik kokpit ve elektrikli yüzme platformu",
+              "Webasto dizel kabin ısıtıcısı"
+            ]
+          }
+        ]
+      },
+
+      // 9. HANSE
+      {
+        id: "hanse",
+        name: "Hanse Yachts",
+        country: "Almanya",
+        category: "sail",
+        founded: "1990",
+        badge: { bg: "bg-slate-700 text-white", icon: "fa-wind" },
+        description: "Kolay kullanım ve modern tasarımlarıyla bilinen Alman yelkenli markasıdır.",
+        models: [
+          {
+            id: "hanse-460",
+            name: "Hanse 460",
+            series: "Modern Gövde Serisi",
+            type: "Yelkenli",
+            price: "340.000 €",
+            image: "images/hanse-460.jpg",
+            length: "14.60 m",
+            beam: "4.79 m",
+            draft: "2.25 m",
+            cabins: "3 ila 5 Kabin / 2 Banyo",
+            engine: "Yanmar 57 HP",
+            fuel: "210 L",
+            water: "450 L",
+            description: "Kendinden tramolalı flok sistemi ve hidrodinamik burun hatlarıyla tek kişi bile kolayca seyre çıkabilir.",
+            highlights: [
+              "Kendinden tramolalı entegre flok donanımı",
+              "Dümenciye kadar gelen tüm mandar ve iskotalar",
+              "Loft tarzı yüksek tavanlı salon"
+            ]
+          }
+        ]
+      },
+
+      // 10. DUFOUR
+      {
+        id: "dufour",
+        name: "Dufour Yachts",
+        country: "Fransa",
+        category: "sail",
+        founded: "1964",
+        badge: { bg: "bg-teal-700 text-white", icon: "fa-sailboat" },
+        description: "Performans odaklı yelkenli tekneleriyle tanınan köklü bir Fransız markasıdır.",
+        models: [
+          {
+            id: "dufour-470",
+            name: "Dufour 470",
+            series: "İkonik Seri",
+            type: "Yelkenli",
+            price: "360.000 €",
+            image: "images/dufour-470.jpg",
+            length: "14.85 m",
+            beam: "4.74 m",
+            draft: "2.25 m",
+            cabins: "3 veya 4 Kabin",
+            engine: "Volvo Penta 60 HP",
+            fuel: "250 L",
+            water: "530 L",
+            description: "Kıç tarafında yer alan barbekü ve lavabosuyla açık havada gastronomi ve yelken keyfi sunar.",
+            highlights: [
+              "Kıç platformda entegre Plancha gazlı barbekü",
+              "Easy, Ocean ve Performance 3 farklı arma tipi",
+              "Geniş boydan boya cam tavan pencereleri"
+            ]
+          }
+        ]
+      },
+
+      // 11. LAGOON
+      {
+        id: "lagoon",
+        name: "Lagoon Catamarans",
+        country: "Fransa",
+        category: "cat",
+        founded: "1984",
+        badge: { bg: "bg-teal-600 text-white", icon: "fa-water" },
+        description: "Katamaran segmentinde geniş yaşam alanları sunan pazar lideri Fransız üreticidir.",
+        models: [
+          {
+            id: "lagoon-42",
+            name: "Lagoon 42",
+            series: "Yaşam Katamaran Serisi",
+            type: "Katamaran",
+            price: "580.000 €",
+            image: "images/lagoon-42.jpg",
+            length: "12.80 m",
+            beam: "7.70 m",
+            draft: "1.25 m",
+            cabins: "4 Kabin / 4 Özel Banyo",
+            engine: "2x Yanmar 57 HP",
+            fuel: "600 L",
+            water: "600 L",
+            description: "Geriye çekilmiş direği ve 7.70 metre gövde eni ile salon ve kokpit tek seviyede villa ferahlığı yaratır.",
+            highlights: [
+              "7.70 metre gövde genişliği ile villa ferahlığı",
+              "Her kabinde bağımsız klima ve banyo/WC",
+              "Onan 11 kW jeneratör ve su yapıcı desteği"
+            ]
+          }
+        ]
+      },
+
+      // 12. FOUNTAINE PAJOT
+      {
+        id: "fountaine-pajot",
+        name: "Fountaine Pajot",
+        country: "Fransa",
+        category: "cat",
+        founded: "1976",
+        badge: { bg: "bg-cyan-700 text-white", icon: "fa-ship" },
+        description: "Lüks ve uzun seyir katamaranlarında dünya çapında öncü bir diğer Fransız markasıdır.",
+        models: [
+          {
+            id: "fp-isla-40",
+            name: "Isla 40",
+            series: "Okyanus Katamaran Serisi",
+            type: "Katamaran",
+            price: "490.000 €",
+            image: "images/fp-isla-40.jpg",
+            length: "11.93 m",
+            beam: "6.63 m",
+            draft: "1.21 m",
+            cabins: "3 veya 4 Kabin",
+            engine: "2x Volvo 30 HP",
+            fuel: "300 L",
+            water: "530 L",
+            description: "Ters pruva tasarımı ve modern hatlarıyla 40 fit sınıfında okyanus geçişine hazır ikonik model.",
+            highlights: [
+              "Dinamik ters pruva (inverted bow) gövde mimarisi",
+              "Salonda dinlenme şezlongu ve ada masa",
+              "Güneş panelleriyle bağımsız enerji sistemi"
+            ]
+          }
+        ]
+      }
     ];
 
-    const initialBoatData = [
-      {
-        id: 101,
-        adNo: "119823401",
-        title: "2021 Bénéteau Oceanis 40.1 - İlk Sahibinden, Yanmar Motor, Full Navigasyon",
-        brand: "Bénéteau",
-        model: "Oceanis 40.1",
-        year: 2021,
-        length: 12.87,
-        beam: 4.18,
-        cabins: 3,
-        engine: "Yanmar 45 HP",
-        type: "Yelkenli",
-        price: 265000,
-        currency: "EUR",
-        location: "Muğla / Marmaris",
-        photoCount: 16,
-        image: "https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?auto=compress&cs=tinysrgb&w=800",
-        gallery: [
-          "https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?auto=compress&cs=tinysrgb&w=800",
-          "https://images.pexels.com/photos/273886/pexels-photo-273886.jpeg?auto=compress&cs=tinysrgb&w=800"
-        ],
-        description: "İlk sahibinden, ful donanımlı Bénéteau Oceanis. Masrafsız, marinada bağlı ve sezona hazır."
-      },
-      {
-        id: 102,
-        adNo: "119823402",
-        title: "2022 Bénéteau Oceanis 46.1 - Geniş Kokpit, Baş Pervane, Elektrikli Vinçler",
-        brand: "Bénéteau",
-        model: "Oceanis 46.1",
-        year: 2022,
-        length: 14.60,
-        beam: 4.50,
-        cabins: 4,
-        engine: "Yanmar 57 HP",
-        type: "Yelkenli",
-        price: 385000,
-        currency: "EUR",
-        location: "Muğla / Göcek",
-        photoCount: 20,
-        image: "https://images.pexels.com/photos/273886/pexels-photo-273886.jpeg?auto=compress&cs=tinysrgb&w=800",
-        gallery: [
-          "https://images.pexels.com/photos/273886/pexels-photo-273886.jpeg?auto=compress&cs=tinysrgb&w=800"
-        ],
-        description: "4 kabinli ferah tasarım, çift dümen, baş manevra pervanesi ve jeneratör."
-      },
-      {
-        id: 103,
-        adNo: "119823403",
-        title: "2023 Sunseeker Predator 55 - Sıfır Kondisyonda, Joystick Manevra & Garajlı",
-        brand: "Sunseeker",
-        model: "Predator 55",
-        year: 2023,
-        length: 17.05,
-        beam: 4.48,
-        cabins: 2,
-        engine: "2x Volvo IPS 950",
-        type: "Motoryat",
-        price: 1180000,
-        currency: "EUR",
-        location: "Muğla / Bodrum",
-        photoCount: 24,
-        image: "https://images.pexels.com/photos/1586795/pexels-photo-1586795.jpeg?auto=compress&cs=tinysrgb&w=800",
-        gallery: [
-          "https://images.pexels.com/photos/1586795/pexels-photo-1586795.jpeg?auto=compress&cs=tinysrgb&w=800"
-        ],
-        description: "Sadece 140 saatte, ultra lüks donanım, su altı aydınlatmaları ve Williams bot hediyeli."
-      },
-      {
-        id: 104,
-        adNo: "119823404",
-        title: "2020 Jeanneau Sun Odyssey 440 - Aile Teknesi, Sarma Ana Yelken & Güneş Paneli",
-        brand: "Jeanneau",
-        model: "Sun Odyssey 440",
-        year: 2020,
-        length: 13.39,
-        beam: 4.29,
-        cabins: 3,
-        engine: "Yanmar 45 HP",
-        type: "Yelkenli",
-        price: 235000,
-        currency: "EUR",
-        location: "Antalya / Kaş",
-        photoCount: 14,
-        image: "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=800",
-        gallery: [
-          "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=800"
-        ],
-        description: "Yenilikçi yan güverte yürüyüş koridoru. Webasto ısıtıcı ve güneş panelleri mevcut."
-      },
-      {
-        id: 105,
-        adNo: "119823405",
-        title: "2019 Bavaria Cruiser 46 - Özel Kullanım, Volvo Penta 75HP, Webasto Isıtıcı",
-        brand: "Bavaria",
-        model: "Cruiser 46",
-        year: 2019,
-        length: 14.27,
-        beam: 4.35,
-        cabins: 4,
-        engine: "Volvo Penta 75 HP",
-        type: "Yelkenli",
-        price: 215000,
-        currency: "EUR",
-        location: "İzmir / Çeşme",
-        photoCount: 18,
-        image: "https://images.pexels.com/photos/2083834/pexels-photo-2083834.jpeg?auto=compress&cs=tinysrgb&w=800",
-        gallery: [
-          "https://images.pexels.com/photos/2083834/pexels-photo-2083834.jpeg?auto=compress&cs=tinysrgb&w=800"
-        ],
-        description: "4 kabin aile teknesi, elektrikli platform, Garmin navigasyon paketi."
-      },
-      {
-        id: 106,
-        adNo: "119823406",
-        title: "2018 Azimut Flybridge 50 - Çift Caterpillar Motor, Su Yapıcı, Williams Bot Dahil",
-        brand: "Azimut",
-        model: "Flybridge 50",
-        year: 2018,
-        length: 16.10,
-        beam: 4.66,
-        cabins: 3,
-        engine: "2x CAT 715 HP",
-        type: "Motoryat",
-        price: 920000,
-        currency: "EUR",
-        location: "İstanbul / Tuzla",
-        photoCount: 32,
-        image: "https://images.pexels.com/photos/1036856/pexels-photo-1036856.jpeg?auto=compress&cs=tinysrgb&w=800",
-        gallery: [
-          "https://images.pexels.com/photos/1036856/pexels-photo-1036856.jpeg?auto=compress&cs=tinysrgb&w=800"
-        ],
-        description: "Seakeeper jiroskopik stabilizatör ile sıfır yalpalanma. Flybridge barbekü ve tam donanım."
-      },
-      {
-        id: 107,
-        adNo: "119823407",
-        title: "2022 Lagoon 42 Katamaran - Konfor Paketi, 4 Kabin 4 Banyo, Jeneratör & Klima",
-        brand: "Lagoon",
-        model: "Lagoon 42",
-        year: 2022,
-        length: 12.80,
-        beam: 7.70,
-        cabins: 4,
-        engine: "2x Yanmar 57 HP",
-        type: "Katamaran",
-        price: 540000,
-        currency: "EUR",
-        location: "Muğla / Fethiye",
-        photoCount: 22,
-        image: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=800",
-        gallery: [
-          "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=800"
-        ],
-        description: "Geniş gövde stabilitesi, 4 kabin 4 ebeveyn banyosu, klimalı ve su yapıcılı lüks katamaran."
-      }
-    ];
+    let currentSelectedBrand = null;
+    let currentSelectedModel = null;
+    let currentCategoryFilter = "all";
 
-    // LocalStorage Yönetimi
-    let boatData = JSON.parse(localStorage.getItem("my_boat_data")) || initialBoatData;
-    let favorites = JSON.parse(localStorage.getItem("my_boat_favs") || "[]");
-    let compareList = JSON.parse(localStorage.getItem("my_boat_compare") || "[]");
-    let isDarkMode = localStorage.getItem("my_boat_theme") === "dark";
+    const brandsSection = document.getElementById("brandsSection");
+    const modelsSection = document.getElementById("modelsSection");
+    const detailSection = document.getElementById("detailSection");
+    const brandsGrid = document.getElementById("brandsGrid");
+    const modelsGrid = document.getElementById("modelsGrid");
 
-    let selectedBrand = "all";
-    let selectedModel = "all";
-    let searchTerm = "";
-    let selectedHullTypes = [];
-    let minPrice = null, maxPrice = null, minYear = null, maxYear = null;
-    let onlyFavorites = false;
-    let currentModalBoatPrice = 0;
+    const bcBrand = document.getElementById("bcBrand");
+    const bcSeparator = document.getElementById("bcSeparator");
+    const bcModel = document.getElementById("bcModel");
+    const globalSearchInput = document.getElementById("globalSearchInput");
 
-    const accordionContainer = document.getElementById("accordionContainer");
-    const boatTableBody = document.getElementById("boatTableBody");
-    const listingSummary = document.getElementById("listingSummary");
-    const breadcrumbLabel = document.getElementById("breadcrumbLabel");
-    const searchInput = document.getElementById("searchInput");
-    const searchBtn = document.getElementById("searchBtn");
-    const sortSelect = document.getElementById("sortSelect");
-    const detailModal = document.getElementById("detailModal");
-    const createModal = document.getElementById("createModal");
-    const compareModal = document.getElementById("compareModal");
-    const favCountBadge = document.getElementById("favCountBadge");
-    const compareCountBadge = document.getElementById("compareCountBadge");
-    const favFilterBtn = document.getElementById("favFilterBtn");
-    const themeIcon = document.getElementById("themeIcon");
+    const brandsDropdownMenu = document.getElementById("brandsDropdownMenu");
+    const dropdownItemsList = document.getElementById("dropdownItemsList");
+    const dropdownChevron = document.getElementById("dropdownChevron");
+    const dropdownBrandCountBadge = document.getElementById("dropdownBrandCountBadge");
 
-    function saveState() {
-      localStorage.setItem("my_boat_data", JSON.stringify(boatData));
-      localStorage.setItem("my_boat_favs", JSON.stringify(favorites));
-      localStorage.setItem("my_boat_compare", JSON.stringify(compareList));
-    }
-
-    // KARANLIK MOD (DARK MODE)
-    function applyTheme() {
-      if (isDarkMode) {
-        document.documentElement.classList.add("dark");
-        themeIcon.classList.remove("fa-moon");
-        themeIcon.classList.add("fa-sun", "text-amber-400");
-      } else {
-        document.documentElement.classList.remove("dark");
-        themeIcon.classList.remove("fa-sun", "text-amber-400");
-        themeIcon.classList.add("fa-moon");
-      }
-    }
-
-    function toggleDarkMode() {
-      isDarkMode = !isDarkMode;
-      localStorage.setItem("my_boat_theme", isDarkMode ? "dark" : "light");
-      applyTheme();
-    }
-
-    function getBrandMeta(brandName) {
-      return brandHierarchy.find(b => b.name === brandName) || { color: "bg-slate-700 text-white", icon: "fa-ship" };
-    }
-
-    function formatPrice(val, cur) {
-      return val.toLocaleString("tr-TR") + " " + (cur === "EUR" ? "€" : "$");
-    }
-
-    function updateBadges() {
-      favCountBadge.textContent = favorites.length;
-      compareCountBadge.textContent = compareList.length;
-    }
-
-    // FAVORİ İŞLEMLERİ
-    function toggleFavorite(id, event) {
+    function toggleBrandsDropdown(event) {
       event.stopPropagation();
-      if (favorites.includes(id)) {
-        favorites = favorites.filter(favId => favId !== id);
+      const isHidden = brandsDropdownMenu.classList.contains("hidden");
+      if (isHidden) {
+        brandsDropdownMenu.classList.remove("hidden");
+        dropdownChevron.classList.add("rotate-180");
       } else {
-        favorites.push(id);
-      }
-      saveState();
-      updateBadges();
-      renderBoatList();
-    }
-
-    function toggleFavoriteFilter() {
-      onlyFavorites = !onlyFavorites;
-      if (onlyFavorites) {
-        favFilterBtn.classList.add("bg-red-600", "hover:bg-red-700");
-        breadcrumbLabel.textContent = "Favorilerimdeki İlanlar";
-      } else {
-        favFilterBtn.classList.remove("bg-red-600", "hover:bg-red-700");
-        updateBreadcrumb();
-      }
-      renderBoatList();
-    }
-
-    // KIYASLAMA (COMPARE) İŞLEMLERİ
-    function toggleCompare(id, event) {
-      event.stopPropagation();
-      if (compareList.includes(id)) {
-        compareList = compareList.filter(item => item !== id);
-      } else {
-        if (compareList.length >= 2) {
-          alert("Aynı anda en fazla 2 tekneyi karşılaştırabilirsiniz. Biri çıkarılıyor.");
-          compareList.shift();
-        }
-        compareList.push(id);
-      }
-      saveState();
-      updateBadges();
-      renderBoatList();
-    }
-
-    function openCompareModal() {
-      if (compareList.length === 0) {
-        alert("Lütfen karşılaştırmak için en az 1 veya 2 teknenin 'Kıyasla' butonuna tıklayın.");
-        return;
-      }
-
-      const boats = compareList.map(id => boatData.find(b => b.id === id)).filter(Boolean);
-      const compareContent = document.getElementById("compareContent");
-
-      compareContent.innerHTML = `
-        <div class="grid grid-cols-${boats.length} gap-4">
-          ${boats.map(b => `
-            <div class="border dark:border-slate-700 rounded-lg p-3 bg-gray-50 dark:bg-slate-800 space-y-2 text-xs">
-              <div class="h-36 rounded overflow-hidden">
-                <img src="${b.image}" class="w-full h-full object-cover">
-              </div>
-              <h4 class="font-bold text-sm text-[#003366] dark:text-sky-400">${b.title}</h4>
-              <div class="text-base font-black text-red-600">${formatPrice(b.price, b.currency || 'EUR')}</div>
-              
-              <div class="divide-y divide-gray-200 dark:divide-slate-700 pt-2">
-                <div class="py-1 flex justify-between"><span>Marka:</span><strong>${b.brand}</strong></div>
-                <div class="py-1 flex justify-between"><span>Model:</span><strong>${b.model}</strong></div>
-                <div class="py-1 flex justify-between"><span>Tip:</span><strong>${b.type}</strong></div>
-                <div class="py-1 flex justify-between"><span>Yıl:</span><strong>${b.year}</strong></div>
-                <div class="py-1 flex justify-between"><span>Tam Boy:</span><strong>${b.length} m</strong></div>
-                <div class="py-1 flex justify-between"><span>Genişlik:</span><strong>${b.beam || '4.20'} m</strong></div>
-                <div class="py-1 flex justify-between"><span>Kabin:</span><strong>${b.cabins} Kabin</strong></div>
-                <div class="py-1 flex justify-between"><span>Motor:</span><strong>${b.engine || 'Dahili Motor'}</strong></div>
-                <div class="py-1 flex justify-between"><span>Konum:</span><strong>${b.location}</strong></div>
-              </div>
-            </div>
-          `).join("")}
-        </div>
-      `;
-
-      compareModal.classList.remove("hidden");
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeCompareModal() {
-      compareModal.classList.add("hidden");
-      document.body.style.overflow = "auto";
-    }
-
-    function clearCompareList() {
-      compareList = [];
-      saveState();
-      updateBadges();
-      closeCompareModal();
-      renderBoatList();
-    }
-
-    // İLAN SİLME
-    function deleteBoat(id, event) {
-      event.stopPropagation();
-      const boat = boatData.find(b => b.id === id);
-      if (confirm(`"${boat ? boat.title : 'Bu ilanı'}" silmek istediğinize emin misiniz?`)) {
-        boatData = boatData.filter(b => b.id !== id);
-        favorites = favorites.filter(favId => favId !== id);
-        compareList = compareList.filter(cId => cId !== id);
-        saveState();
-        updateBadges();
-        renderAccordion();
-        renderBoatList();
+        closeDropdown();
       }
     }
 
-    // İLAN DÜZENLEME (EDIT)
-    function editBoat(id, event) {
-      event.stopPropagation();
-      const boat = boatData.find(b => b.id === id);
-      if (!boat) return;
-
-      document.getElementById("createModalTitle").textContent = "İlanı Düzenle & Güncelle";
-      document.getElementById("editBoatId").value = boat.id;
-      document.getElementById("newTitle").value = boat.title;
-      document.getElementById("newBrand").value = boat.brand;
-      document.getElementById("newModel").value = boat.model;
-      document.getElementById("newType").value = boat.type;
-      document.getElementById("newYear").value = boat.year;
-      document.getElementById("newPrice").value = boat.price;
-      document.getElementById("newLength").value = boat.length;
-      document.getElementById("newCabins").value = boat.cabins || 3;
-      document.getElementById("newLocation").value = boat.location;
-      document.getElementById("newImage").value = boat.image.startsWith("data:") ? "" : boat.image;
-      document.getElementById("newDescription").value = boat.description || "";
-      document.getElementById("saveAdBtn").textContent = "Değişiklikleri Güncelle";
-
-      createModal.classList.remove("hidden");
-      document.body.style.overflow = "hidden";
+    function closeDropdown() {
+      brandsDropdownMenu.classList.add("hidden");
+      dropdownChevron.classList.remove("rotate-180");
     }
 
-    // KREDİ VE TAKSİT HESAPLAMA MOTORU
-    function calculateLoan() {
-      const downPayment = parseFloat(document.getElementById("calcDownPayment").value) || 0;
-      const months = parseInt(document.getElementById("calcMonths").value) || 36;
-      const loanAmount = currentModalBoatPrice - downPayment;
+    document.addEventListener("click", (e) => {
+      const container = document.getElementById("brandsDropdownContainer");
+      if (!container.contains(e.target)) closeDropdown();
+    });
 
-      if (loanAmount <= 0) {
-        document.getElementById("calcMonthlyResult").textContent = "Peşinat Yeterli";
-        return;
-      }
-
-      // Basit aylık faiz formülü (%2.49 oran)
-      const monthlyRate = 0.0249;
-      const monthlyPayment = (loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, months))) / (Math.pow(1 + monthlyRate, months) - 1);
-
-      document.getElementById("calcMonthlyResult").textContent = Math.round(monthlyPayment).toLocaleString("tr-TR") + " € / ay";
-    }
-
-    // AKORDEON MENÜ
-    function renderAccordion() {
-      let html = `
+    function renderDropdownItems() {
+      dropdownBrandCountBadge.textContent = `${showroomData.length} Marka`;
+      dropdownItemsList.innerHTML = showroomData.map(b => `
         <div 
-          onclick="selectCategory('all', 'all')" 
-          class="cursor-pointer p-2 rounded flex items-center justify-between text-xs font-bold ${selectedBrand === 'all' && !onlyFavorites ? 'bg-blue-50 dark:bg-slate-800 text-[#003366] dark:text-sky-400' : 'hover:bg-gray-50 dark:hover:bg-slate-800 text-gray-700 dark:text-gray-300'}"
+          onclick="selectBrandFromDropdown('${b.id}')"
+          class="p-2 sm:p-2.5 hover:bg-slate-900/90 cursor-pointer flex items-center justify-between group transition rounded-xl"
         >
-          <span>Tüm Markalar</span>
-          <span class="bg-gray-200 dark:bg-slate-700 px-1.5 py-0.5 rounded text-[10px]">${boatData.length}</span>
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-xs font-bold ${b.badge.bg}">
+              <i class="fa-solid ${b.badge.icon}"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-white group-hover:text-amber-400 transition">${b.name}</h4>
+              <span class="text-[9px] sm:text-[10px] text-slate-400">${b.country} &bull; ${b.models.length} Model</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right text-[10px] text-slate-600 group-hover:text-amber-400 group-hover:translate-x-1 transition"></i>
         </div>
-      `;
+      `).join("");
+    }
 
-      brandHierarchy.forEach(brand => {
-        const count = boatData.filter(b => b.brand === brand.name).length;
-        const isBrandActive = (selectedBrand === brand.name);
+    function selectBrandFromDropdown(brandId) {
+      closeDropdown();
+      openBrandShowroom(brandId);
+    }
 
-        html += `
-          <div class="border border-gray-100 dark:border-slate-800 rounded overflow-hidden">
-            <div 
-              onclick="toggleBrandAccordion('${brand.name}')" 
-              class="cursor-pointer p-2 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-slate-800 ${isBrandActive ? 'bg-blue-50/70 dark:bg-slate-800' : ''}"
-            >
-              <div class="flex items-center gap-2">
-                <div class="brand-avatar ${brand.color}">
-                  <i class="fa-solid ${brand.icon}"></i>
-                </div>
-                <span class="font-bold text-xs ${isBrandActive ? 'text-[#003366] dark:text-sky-400' : 'text-gray-800 dark:text-gray-200'}">${brand.name}</span>
-              </div>
-              <div class="flex items-center gap-1.5">
-                <span class="text-[10px] text-gray-400">(${count})</span>
-                <i class="fa-solid fa-chevron-down text-[10px] text-gray-400 transition-transform ${isBrandActive ? 'rotate-180' : ''}"></i>
-              </div>
-            </div>
+    function filterBrandCategory(cat) {
+      currentCategoryFilter = cat;
+      ["all", "motor", "sail", "cat"].forEach(c => {
+        const btn = document.getElementById(`catBtn-${c}`);
+        if (c === cat) {
+          btn.className = "px-3.5 py-1.5 rounded-xl bg-amber-500 text-slate-950 font-bold whitespace-nowrap shadow transition";
+        } else {
+          btn.className = "px-3.5 py-1.5 rounded-xl glass-card text-slate-300 font-semibold whitespace-nowrap hover:text-white transition";
+        }
+      });
+      renderBrandsList();
+    }
 
-            <div class="${isBrandActive ? 'block' : 'hidden'} bg-gray-50/80 dark:bg-slate-800/40 border-t border-gray-100 dark:border-slate-800 py-1 px-3 space-y-1">
-              <div 
-                onclick="selectCategory('${brand.name}', 'all')" 
-                class="cursor-pointer text-xs py-1 px-2 rounded hover:text-[#003366] dark:hover:text-sky-400 ${selectedModel === 'all' ? 'font-bold text-[#003366] dark:text-sky-400' : 'text-gray-600 dark:text-gray-400'}"
-              >
-                &bull; Tüm ${brand.name} Modelleri
-              </div>
-              ${brand.models.map(m => {
-                const modelCount = boatData.filter(b => b.brand === brand.name && b.model === m).length;
-                const isModelActive = (selectedModel === m);
-                return `
-                  <div 
-                    onclick="selectCategory('${brand.name}', '${m}')" 
-                    class="cursor-pointer text-xs py-1 px-2 rounded flex items-center justify-between hover:bg-blue-100/50 dark:hover:bg-slate-700 ${isModelActive ? 'font-bold text-[#003366] dark:text-sky-400 bg-blue-100/60 dark:bg-slate-700' : 'text-gray-600 dark:text-gray-400'}"
-                  >
-                    <span>${m}</span>
-                    <span class="text-[10px] text-gray-400">(${modelCount})</span>
-                  </div>
-                `;
-              }).join("")}
-            </div>
-          </div>
-        `;
+    function showBrandsView() {
+      closeDropdown();
+      currentSelectedBrand = null;
+      currentSelectedModel = null;
+
+      brandsSection.classList.remove("hidden");
+      modelsSection.classList.add("hidden");
+      detailSection.classList.add("hidden");
+
+      bcBrand.classList.add("hidden");
+      bcSeparator.classList.add("hidden");
+      bcModel.classList.add("hidden");
+
+      renderBrandsList();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderBrandsList(filterTerm = "") {
+      const term = filterTerm.toLowerCase().trim();
+      const filtered = showroomData.filter(b => {
+        const matchesCategory = (currentCategoryFilter === "all") || (b.category === currentCategoryFilter);
+        const matchesSearch = b.name.toLowerCase().includes(term) ||
+                              b.country.toLowerCase().includes(term) ||
+                              b.models.some(m => m.name.toLowerCase().includes(term));
+        return matchesCategory && matchesSearch;
       });
 
-      accordionContainer.innerHTML = html;
-    }
-
-    function toggleBrandAccordion(brandName) {
-      onlyFavorites = false;
-      favFilterBtn.classList.remove("bg-red-600");
-      if (selectedBrand === brandName && selectedModel === "all") {
-        selectedBrand = "all";
-      } else {
-        selectedBrand = brandName;
-        selectedModel = "all";
-      }
-      updateBreadcrumb();
-      renderAccordion();
-      renderBoatList();
-    }
-
-    function selectCategory(brandName, modelName) {
-      onlyFavorites = false;
-      favFilterBtn.classList.remove("bg-red-600");
-      selectedBrand = brandName;
-      selectedModel = modelName;
-      updateBreadcrumb();
-      renderAccordion();
-      renderBoatList();
-    }
-
-    function updateBreadcrumb() {
-      if (selectedBrand === "all") {
-        breadcrumbLabel.textContent = "Tüm Tekne & Yat İlanları";
-      } else if (selectedModel === "all") {
-        breadcrumbLabel.textContent = `${selectedBrand} İlanları`;
-      } else {
-        breadcrumbLabel.textContent = `${selectedBrand} > ${selectedModel} İlanları`;
-      }
-    }
-
-    function applyRangeFilters() {
-      const minP = document.getElementById("minPriceInput").value;
-      const maxP = document.getElementById("maxPriceInput").value;
-      const minY = document.getElementById("minYearInput").value;
-      const maxY = document.getElementById("maxYearInput").value;
-
-      minPrice = minP ? parseFloat(minP) : null;
-      maxPrice = maxP ? parseFloat(maxP) : null;
-      minYear = minY ? parseInt(minY) : null;
-      maxYear = maxY ? parseInt(maxY) : null;
-
-      renderBoatList();
-    }
-
-    function resetFilters() {
-      selectedBrand = "all";
-      selectedModel = "all";
-      searchTerm = "";
-      minPrice = null; maxPrice = null; minYear = null; maxYear = null;
-      onlyFavorites = false;
-      favFilterBtn.classList.remove("bg-red-600");
-
-      searchInput.value = "";
-      document.getElementById("minPriceInput").value = "";
-      document.getElementById("maxPriceInput").value = "";
-      document.getElementById("minYearInput").value = "";
-      document.getElementById("maxYearInput").value = "";
-      document.querySelectorAll('input[name="hullType"]').forEach(c => c.checked = false);
-      selectedHullTypes = [];
-
-      updateBreadcrumb();
-      renderAccordion();
-      renderBoatList();
-    }
-
-    // İLAN LİSTESİNİ ÇİZ
-    function renderBoatList() {
-      let filtered = boatData.filter(b => {
-        if (onlyFavorites && !favorites.includes(b.id)) return false;
-
-        const matchBrand = (selectedBrand === "all") || (b.brand === selectedBrand);
-        const matchModel = (selectedModel === "all") || (b.model === selectedModel);
-        const matchSearch = b.title.toLowerCase().includes(searchTerm) ||
-                            b.brand.toLowerCase().includes(searchTerm) ||
-                            b.model.toLowerCase().includes(searchTerm);
-        const matchHull = (selectedHullTypes.length === 0) || selectedHullTypes.includes(b.type);
-
-        const matchMinPrice = (minPrice === null) || (b.price >= minPrice);
-        const matchMaxPrice = (maxPrice === null) || (b.price <= maxPrice);
-        const matchMinYear = (minYear === null) || (b.year >= minYear);
-        const matchMaxYear = (maxYear === null) || (b.year <= maxYear);
-
-        return matchBrand && matchModel && matchSearch && matchHull && matchMinPrice && matchMaxPrice && matchMinYear && matchMaxYear;
-      });
-
-      const sort = sortSelect.value;
-      if (sort === "price-asc") filtered.sort((a,b) => a.price - b.price);
-      else if (sort === "price-desc") filtered.sort((a,b) => b.price - a.price);
-      else if (sort === "year-desc") filtered.sort((a,b) => b.year - a.year);
-
-      listingSummary.innerHTML = `Toplam <strong class="text-gray-900 dark:text-white">${filtered.length}</strong> ilan listeleniyor`;
-
-      if (filtered.length === 0) {
-        boatTableBody.innerHTML = `
-          <div class="p-10 text-center text-gray-500 dark:text-gray-400">
-            <i class="fa-solid fa-anchor text-3xl text-gray-300 dark:text-gray-600 mb-2 block"></i>
-            Kriterlere uygun ilan bulunamadı.
-          </div>
-        `;
-        return;
-      }
-
-      boatTableBody.innerHTML = filtered.map(b => {
-        const meta = getBrandMeta(b.brand);
-        const isFav = favorites.includes(b.id);
-        const isCompared = compareList.includes(b.id);
-
-        return `
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-3 p-3 items-center hover:bg-blue-50/40 dark:hover:bg-slate-800/50 transition">
-            
-            <!-- Görsel -->
-            <div onclick="openModal(${b.id})" class="md:col-span-2 relative h-24 rounded overflow-hidden bg-gray-100 dark:bg-slate-800 border dark:border-slate-700 cursor-pointer group">
-              <img src="${b.image}" alt="${b.model}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-              <span class="absolute bottom-1 right-1 bg-black/75 text-white text-[10px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1">
-                <i class="fa-solid fa-camera"></i> ${b.photoCount || 10}
+      brandsGrid.innerHTML = filtered.map(b => `
+        <div 
+          onclick="openBrandShowroom('${b.id}')"
+          class="glass-card rounded-2xl p-5 sm:p-6 transition cursor-pointer group flex flex-col justify-between"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="brand-logo-badge ${b.badge.bg} shadow-md group-hover:scale-105 transition duration-200">
+                <i class="fa-solid ${b.badge.icon}"></i>
+              </div>
+              <span class="text-[10px] sm:text-[11px] font-semibold text-slate-400 bg-slate-900/80 border border-slate-700/60 px-2.5 py-0.5 rounded-full">
+                ${b.country} &bull; ${b.founded}
               </span>
             </div>
 
-            <!-- Başlık -->
-            <div class="md:col-span-4">
-              <h4 onclick="openModal(${b.id})" class="text-sm font-semibold text-[#003366] dark:text-sky-400 hover:underline cursor-pointer leading-snug line-clamp-2">
-                ${b.title}
-              </h4>
-              <div class="flex items-center gap-2 mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                <span class="bg-gray-100 dark:bg-slate-800 border dark:border-slate-700 px-1.5 py-0.5 rounded font-medium">${b.type}</span>
-                <span>${b.cabins} Kabin</span>
-                <span>Model: <strong class="text-gray-800 dark:text-gray-200">${b.model}</strong></span>
-              </div>
-            </div>
-
-            <!-- Marka ve Arma -->
-            <div class="md:col-span-2 flex items-center gap-2">
-              <div class="brand-avatar ${meta.color} shadow-sm">
-                <i class="fa-solid ${meta.icon}"></i>
-              </div>
-              <span class="text-xs font-bold text-gray-800 dark:text-gray-200">${b.brand}</span>
-            </div>
-
-            <!-- Yıl -->
-            <div class="md:col-span-1 text-center font-semibold text-gray-700 dark:text-gray-300 text-sm">
-              ${b.year}
-            </div>
-
-            <!-- Boy -->
-            <div class="md:col-span-1 text-center text-xs text-gray-600 dark:text-gray-400">
-              <strong class="text-gray-800 dark:text-gray-200 text-sm">${b.length}m</strong>
-              <div class="text-[10px] text-gray-400">${b.beam || '4.2'}m en</div>
-            </div>
-
-            <!-- Fiyat -->
-            <div class="md:col-span-1 text-right">
-              <div class="text-sm font-bold text-red-600 dark:text-red-400">${formatPrice(b.price, b.currency || 'EUR')}</div>
-              <div class="text-[10px] text-gray-400 mt-0.5">${b.location}</div>
-            </div>
-
-            <!-- İşlemler (Favori, Kıyasla, Düzenle, Sil) -->
-            <div class="md:col-span-1 flex items-center justify-end md:justify-center gap-1.5">
-              <!-- Favori -->
-              <button onclick="toggleFavorite(${b.id}, event)" title="Favoriye Ekle" class="p-1 rounded hover:bg-red-50 dark:hover:bg-slate-800 text-xs transition">
-                <i class="fa-heart ${isFav ? 'fa-solid text-red-500' : 'fa-regular text-gray-400 hover:text-red-400'}"></i>
-              </button>
-
-              <!-- Kıyasla -->
-              <button onclick="toggleCompare(${b.id}, event)" title="Karşılaştır" class="p-1 rounded hover:bg-amber-50 dark:hover:bg-slate-800 text-xs transition ${isCompared ? 'text-amber-500 font-black' : 'text-gray-400 hover:text-amber-500'}">
-                <i class="fa-solid fa-scale-balanced"></i>
-              </button>
-
-              <!-- Düzenle -->
-              <button onclick="editBoat(${b.id}, event)" title="İlanı Düzenle" class="p-1 rounded hover:bg-blue-50 dark:hover:bg-slate-800 text-gray-400 hover:text-blue-500 text-xs transition">
-                <i class="fa-solid fa-pen"></i>
-              </button>
-
-              <!-- Sil -->
-              <button onclick="deleteBoat(${b.id}, event)" title="İlanı Sil" class="p-1 rounded hover:bg-red-50 dark:hover:bg-slate-800 text-gray-400 hover:text-red-600 text-xs transition">
-                <i class="fa-solid fa-trash-can"></i>
-              </button>
-            </div>
-
+            <h2 class="text-lg sm:text-xl font-black text-white group-hover:text-amber-400 transition">
+              ${b.name}
+            </h2>
+            <p class="text-xs text-slate-400 mt-1.5 line-clamp-2 sm:line-clamp-3 leading-relaxed">
+              ${b.description}
+            </p>
           </div>
-        `;
-      }).join("");
+
+          <div class="mt-4 pt-3.5 border-t border-slate-800/80 flex items-center justify-between text-xs">
+            <span class="text-amber-400 font-bold">${b.models.length} Model Yayında</span>
+            <span class="text-slate-300 group-hover:text-amber-400 group-hover:translate-x-1 transition font-semibold flex items-center gap-1">
+              Modelleri İncele <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </span>
+          </div>
+        </div>
+      `).join("");
     }
 
-    // MODAL AÇMA & DETAY
-    function openModal(boatId) {
-      const boat = boatData.find(b => b.id === boatId);
-      if (!boat) return;
+    function openBrandShowroom(brandId) {
+      const brand = showroomData.find(b => b.id === brandId);
+      if (!brand) return;
 
-      currentModalBoatPrice = boat.price;
-      document.getElementById("modalCategoryPath").textContent = `Vasıta > Deniz Araçları > ${boat.brand} > ${boat.model}`;
-      document.getElementById("modalTitle").textContent = boat.title;
-      
-      const mainImg = document.getElementById("modalMainImg");
-      mainImg.src = boat.image;
-      
-      document.getElementById("modalPhotoCount").textContent = `${boat.photoCount || 10} Fotoğraf`;
-      document.getElementById("modalLocation").textContent = boat.location;
-      document.getElementById("modalPrice").textContent = formatPrice(boat.price, boat.currency || "EUR");
+      currentSelectedBrand = brand;
+      currentSelectedModel = null;
 
-      document.getElementById("modalAdNo").textContent = `#${boat.adNo || ('119' + boat.id)}`;
-      document.getElementById("modalAdDate").textContent = "07 Ekim 2026";
-      document.getElementById("modalBrand").textContent = boat.brand;
-      document.getElementById("modalModel").textContent = boat.model;
-      document.getElementById("modalType").textContent = boat.type;
-      document.getElementById("modalYear").textContent = boat.year;
-      document.getElementById("modalLength").textContent = `${parseFloat(boat.length).toFixed(2)} m`;
-      document.getElementById("modalBeam").textContent = `${boat.beam || '4.20'} m`;
-      document.getElementById("modalCabins").textContent = `${boat.cabins || 3} Kabin`;
-      document.getElementById("modalEngine").textContent = boat.engine || "Standart Deniz Motoru";
-      document.getElementById("modalDescription").textContent = boat.description || "Temiz ve bakımlı tekne.";
+      const bannerLogo = document.getElementById("brandBannerLogo");
+      bannerLogo.className = `w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shadow-xl flex-shrink-0 ${brand.badge.bg}`;
+      bannerLogo.innerHTML = `<i class="fa-solid ${brand.badge.icon}"></i>`;
 
-      // WhatsApp Linki Hazırlama
-      const waMsg = encodeURI(`Merhaba, teknebende.com üzerindeki #${boat.adNo || boat.id} numaralı "${boat.title}" ilanınız hakkında detaylı bilgi almak istiyorum.`);
-      document.getElementById("modalWhatsappLink").href = `https://wa.me/905321234567?text=${waMsg}`;
+      document.getElementById("brandBannerName").textContent = brand.name;
+      document.getElementById("brandBannerOrigin").textContent = `${brand.country} &bull; Kuruluş: ${brand.founded}`;
+      document.getElementById("brandBannerDesc").textContent = brand.description;
+      document.getElementById("modelsCountBadge").textContent = `${brand.models.length} Farklı Model`;
 
-      // Kredi hesaplayıcıyı başlat
-      document.getElementById("calcDownPayment").value = Math.round(boat.price * 0.25);
-      calculateLoan();
+      bcBrand.textContent = brand.name;
+      bcBrand.onclick = () => openBrandShowroom(brandId);
+      bcBrand.classList.remove("hidden");
+      bcSeparator.classList.add("hidden");
+      bcModel.classList.add("hidden");
 
-      // Galeri Görselleri
-      const galleryList = boat.gallery && boat.gallery.length > 0 ? boat.gallery : [boat.image];
-      const thumbsContainer = document.getElementById("modalThumbnails");
-      thumbsContainer.innerHTML = galleryList.map((imgUrl, idx) => `
-        <div onclick="switchMainImage('${imgUrl}', this)" class="w-16 h-12 rounded overflow-hidden border-2 cursor-pointer flex-shrink-0 ${idx === 0 ? 'border-blue-600' : 'border-gray-200 dark:border-slate-700 opacity-70'} hover:opacity-100 transition">
-          <img src="${imgUrl}" class="w-full h-full object-cover">
+      renderModelsList(brand);
+
+      brandsSection.classList.add("hidden");
+      modelsSection.classList.remove("hidden");
+      detailSection.classList.add("hidden");
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderModelsList(brand) {
+      modelsGrid.innerHTML = brand.models.map(m => `
+        <div 
+          onclick="openModelDetail('${m.id}')"
+          class="glass-card rounded-2xl overflow-hidden shadow-lg cursor-pointer transition group flex flex-col"
+        >
+          <div class="h-44 sm:h-48 w-full overflow-hidden relative bg-slate-950">
+            <img src="${m.image}" alt="${m.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <span class="absolute top-2.5 left-2.5 bg-slate-950/80 backdrop-blur text-amber-400 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded border border-slate-700/80">
+              ${m.type}
+            </span>
+          </div>
+
+          <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <span class="text-[9px] sm:text-[10px] font-semibold text-slate-500 uppercase tracking-wider">${m.series}</span>
+              <h3 class="text-base sm:text-lg font-black text-white group-hover:text-amber-400 transition mt-0.5">${m.name}</h3>
+              <p class="text-xs text-slate-400 mt-1.5 line-clamp-2 leading-relaxed">${m.description}</p>
+            </div>
+
+            <div class="mt-3.5 pt-3 border-t border-slate-800/80">
+              <div class="grid grid-cols-3 gap-1.5 text-center text-[10px] sm:text-[11px] mb-3 bg-slate-900/60 p-2 rounded-xl border border-slate-800">
+                <div><span class="text-slate-500 block text-[8px] uppercase font-bold">Boy</span><strong class="text-slate-200">${m.length}</strong></div>
+                <div><span class="text-slate-500 block text-[8px] uppercase font-bold">Genişlik</span><strong class="text-slate-200">${m.beam}</strong></div>
+                <div><span class="text-slate-500 block text-[8px] uppercase font-bold">Kabin</span><strong class="text-slate-200">${m.cabins.split(' ')[0]}</strong></div>
+              </div>
+
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-black text-amber-400 text-xs sm:text-sm">${m.price}</span>
+                <span class="text-slate-300 group-hover:text-amber-400 font-semibold flex items-center gap-1 text-[11px]">
+                  Teknik Detaylar <i class="fa-solid fa-arrow-right text-[9px]"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function openModelDetail(modelId) {
+      if (!currentSelectedBrand) return;
+      const model = currentSelectedBrand.models.find(m => m.id === modelId);
+      if (!model) return;
+
+      currentSelectedModel = model;
+
+      bcSeparator.classList.remove("hidden");
+      bcModel.textContent = model.name;
+      bcModel.classList.remove("hidden");
+
+      document.getElementById("detailImg").src = model.image;
+      document.getElementById("detailType").textContent = model.type;
+      document.getElementById("detailTitle").textContent = `${currentSelectedBrand.name} ${model.name}`;
+      document.getElementById("detailSubTitle").textContent = `${model.series} &bull; ${currentSelectedBrand.country}`;
+      document.getElementById("detailPrice").textContent = model.price;
+      document.getElementById("backToModelsBtnText").textContent = `${currentSelectedBrand.name} Modellerine Dön`;
+      document.getElementById("detailModelHeaderTag").textContent = `${model.name} Resmi Kataloğu`;
+
+      document.getElementById("detailLongDesc").textContent = model.description;
+      document.getElementById("detailHighlights").innerHTML = model.highlights.map(h => `
+        <div class="flex items-center gap-2 bg-slate-900/80 p-2 rounded-xl border border-slate-800/80">
+          <i class="fa-solid fa-circle-check text-amber-400 text-xs flex-shrink-0"></i>
+          <span>${h}</span>
         </div>
       `).join("");
 
-      detailModal.classList.remove("hidden");
-      document.body.style.overflow = "hidden";
+      document.getElementById("specBrand").textContent = currentSelectedBrand.name;
+      document.getElementById("specModel").textContent = model.name;
+      document.getElementById("specType").textContent = model.type;
+      document.getElementById("specLength").textContent = model.length;
+      document.getElementById("specBeam").textContent = model.beam;
+      document.getElementById("specDraft").textContent = model.draft;
+      document.getElementById("specCabins").textContent = model.cabins;
+      document.getElementById("specEngine").textContent = model.engine;
+      document.getElementById("specFuel").textContent = model.fuel;
+      document.getElementById("specWater").textContent = model.water;
+
+      brandsSection.classList.add("hidden");
+      modelsSection.classList.add("hidden");
+      detailSection.classList.remove("hidden");
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function switchMainImage(url, el) {
-      document.getElementById("modalMainImg").src = url;
-      document.querySelectorAll("#modalThumbnails > div").forEach(d => {
-        d.classList.remove("border-blue-600");
-        d.classList.add("border-gray-200", "dark:border-slate-700", "opacity-70");
-      });
-      el.classList.add("border-blue-600");
-      el.classList.remove("opacity-70");
-    }
-
-    function closeModal() {
-      detailModal.classList.add("hidden");
-      document.body.style.overflow = "auto";
-    }
-
-    function openCreateModal() {
-      document.getElementById("createModalTitle").textContent = "Yeni Tekne / Yat İlanı Yayınla";
-      document.getElementById("editBoatId").value = "";
-      document.getElementById("createAdForm").reset();
-      document.getElementById("saveAdBtn").textContent = "+ İlanı Yayınla";
-      createModal.classList.remove("hidden");
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeCreateModal() {
-      createModal.classList.add("hidden");
-      document.body.style.overflow = "auto";
-    }
-
-    // İLAN KAYDETME / GÜNCELLEME (DOSYA YÜKLEME DESTEKLİ)
-    function handleSaveAd(e) {
-      e.preventDefault();
-
-      const editId = document.getElementById("editBoatId").value;
-      const fileInput = document.getElementById("newFileInput");
-      const urlInput = document.getElementById("newImage").value.trim();
-
-      // Dosya seçildiyse Base64 olarak oku, seçilmediyse URL al
-      if (fileInput.files && fileInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-          saveBoatObject(editId, event.target.result);
-        };
-        reader.readAsDataURL(fileInput.files[0]);
+    function backToModelsView() {
+      if (currentSelectedBrand) {
+        openBrandShowroom(currentSelectedBrand.id);
       } else {
-        const finalImg = urlInput || "https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?auto=compress&cs=tinysrgb&w=800";
-        saveBoatObject(editId, finalImg);
+        showBrandsView();
       }
     }
 
-    function saveBoatObject(editId, imageSrc) {
-      if (editId) {
-        // Güncelleme
-        const index = boatData.findIndex(b => b.id === parseInt(editId));
-        if (index !== -1) {
-          boatData[index].title = document.getElementById("newTitle").value.trim();
-          boatData[index].brand = document.getElementById("newBrand").value;
-          boatData[index].model = document.getElementById("newModel").value.trim();
-          boatData[index].type = document.getElementById("newType").value;
-          boatData[index].year = parseInt(document.getElementById("newYear").value);
-          boatData[index].price = parseFloat(document.getElementById("newPrice").value);
-          boatData[index].length = parseFloat(document.getElementById("newLength").value);
-          boatData[index].cabins = parseInt(document.getElementById("newCabins").value) || 3;
-          boatData[index].location = document.getElementById("newLocation").value.trim();
-          boatData[index].description = document.getElementById("newDescription").value.trim();
-          if (imageSrc && !imageSrc.includes("pexels-photo-163236")) {
-            boatData[index].image = imageSrc;
-            boatData[index].gallery = [imageSrc];
-          }
-        }
+    globalSearchInput.addEventListener("input", (e) => {
+      const term = e.target.value;
+      if (term.trim() !== "") {
+        showBrandsView();
+        renderBrandsList(term);
       } else {
-        // Yeni İlan
-        const newAd = {
-          id: Date.now(),
-          adNo: Math.floor(100000000 + Math.random() * 900000000).toString(),
-          title: document.getElementById("newTitle").value.trim(),
-          brand: document.getElementById("newBrand").value,
-          model: document.getElementById("newModel").value.trim(),
-          type: document.getElementById("newType").value,
-          year: parseInt(document.getElementById("newYear").value),
-          price: parseFloat(document.getElementById("newPrice").value),
-          currency: "EUR",
-          length: parseFloat(document.getElementById("newLength").value),
-          beam: 4.25,
-          cabins: parseInt(document.getElementById("newCabins").value) || 3,
-          location: document.getElementById("newLocation").value.trim(),
-          photoCount: 12,
-          image: imageSrc,
-          gallery: [imageSrc],
-          description: document.getElementById("newDescription").value.trim() || "Satıcı tarafından yeni girilmiş güncel tekne ilanı."
-        };
-        boatData.unshift(newAd);
-      }
-
-      saveState();
-      closeCreateModal();
-      renderAccordion();
-      renderBoatList();
-      alert(editId ? "İlan başarıyla güncellendi!" : "Yeni ilan başarıyla yayınlandı!");
-    }
-
-    // Modal Dışı Kapatma Dinleyicileri
-    detailModal.addEventListener("click", (e) => { if (e.target === detailModal) closeModal(); });
-    createModal.addEventListener("click", (e) => { if (e.target === createModal) closeCreateModal(); });
-    compareModal.addEventListener("click", (e) => { if (e.target === compareModal) closeCompareModal(); });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        closeModal();
-        closeCreateModal();
-        closeCompareModal();
+        renderBrandsList();
       }
     });
 
-    searchInput.addEventListener("input", (e) => {
-      searchTerm = e.target.value.trim().toLowerCase();
-      renderBoatList();
-    });
-
-    searchBtn.addEventListener("click", () => {
-      searchTerm = searchInput.value.trim().toLowerCase();
-      renderBoatList();
-    });
-
-    sortSelect.addEventListener("change", () => {
-      renderBoatList();
-    });
-
-    document.querySelectorAll('input[name="hullType"]').forEach(chk => {
-      chk.addEventListener("change", () => {
-        selectedHullTypes = Array.from(document.querySelectorAll('input[name="hullType"]:checked')).map(c => c.value);
-        renderBoatList();
-      });
-    });
-
-    // Başlangıç Kurulumu
-    applyTheme();
-    updateBadges();
-    renderAccordion();
-    renderBoatList();
+    renderDropdownItems();
+    showBrandsView();
   </script>
 </body>
 </html>
